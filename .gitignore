@@ -26,8 +26,8 @@ coverage/
 
 media/
 staticfiles/
-.env
-.env.development
+# .env
+# .env.development
 .envrc
 *.DS_Store
 *.coverage
