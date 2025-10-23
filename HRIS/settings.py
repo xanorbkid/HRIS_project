@@ -41,6 +41,8 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
+
+
 INSTALLED_APPS = [
     'jazzmin',
     'django.contrib.admin',
@@ -53,7 +55,11 @@ INSTALLED_APPS = [
     'cloudinary', 'cloudinary_storage',
     'tinymce',
     'Employee',
+    'Time_off_management',
 ]
+
+
+AUTH_USER_MODEL = 'Auth.CustomUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
