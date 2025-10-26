@@ -33,7 +33,7 @@ staticfiles/
 *.coverage
 .idea/
 .vscode/
-# seeders/
+seeders/
 
 # If using Heroku or similar
 # Procfile
