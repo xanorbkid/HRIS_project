@@ -1,0 +1,46 @@
+[
+    {
+        "model": "Time_off_management.shift",
+        "pk": 1,
+        "fields": {
+            "name": "Regular Day Shift",
+            "start_time": "09:00:00",
+            "end_time": "17:00:00",
+            "timezone": "UTC",
+            "is_flexible": false,
+            "breaks": [
+                {
+                    "start": "12:00",
+                    "end": "13:00",
+                    "type": "lunch"
+                }
+            ],
+            "notes": "Standard 8-hour workday with 1-hour lunch break",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Time_off_management.shift",
+        "pk": 2,
+        "fields": {
+            "name": "Flexible Hours",
+            "start_time": "07:00:00",
+            "end_time": "19:00:00",
+            "timezone": "UTC",
+            "is_flexible": true,
+            "breaks": [
+                {
+                    "start": "12:00",
+                    "end": "13:00",
+                    "type": "lunch"
+                }
+            ],
+            "notes": "Flexible 8-hour workday within core hours",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]

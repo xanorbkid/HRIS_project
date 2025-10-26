@@ -6,14 +6,14 @@ from .models import *
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'head')
+    list_display = ('name', 'head')
     search_fields = ('name',)
     list_filter = ('name',)
 
 
 @admin.register(JobTitle)
 class JobTitleAdmin(admin.ModelAdmin):
-    list_display = ('id', 'name', 'level')
+    list_display = ('name', 'level')
     search_fields = ('name', 'level')
 
 

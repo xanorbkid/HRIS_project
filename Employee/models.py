@@ -2,11 +2,12 @@ from django.db import models
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from tinymce.models import HTMLField
+from Auth.models import SoftDeleteModel
 # from time_off_management.models import *
 
 USER = settings.AUTH_USER_MODEL
 
-class Department(models.Model):
+class Department(SoftDeleteModel):
     name = models.CharField(max_length=100, unique=True)
     description = HTMLField(blank=True)
     head = models.ForeignKey('EmployeeProfile', on_delete=models.SET_NULL, null=True, blank=True, related_name='headed_departments')
@@ -14,7 +15,7 @@ class Department(models.Model):
         return self.name
 
 
-class JobTitle(models.Model):
+class JobTitle(SoftDeleteModel):
     name = models.CharField(max_length=100)
     level = models.CharField(max_length=50, blank=True)
     description = HTMLField(blank=True)
@@ -23,7 +24,7 @@ class JobTitle(models.Model):
         return self.name
 
 
-class EmployeeProfile(models.Model):
+class EmployeeProfile(SoftDeleteModel):
     user = models.OneToOneField(
         USER, on_delete=models.CASCADE, null=True, blank=True,
         related_name='employee_profile'
@@ -53,7 +54,7 @@ class EmployeeProfile(models.Model):
     def __str__(self):
         return self.user.get_full_name() if self.user else f"Employee {self.id}"
 
-class EmployeeDocument(models.Model):
+class EmployeeDocument(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name='documents')
     document_type = models.CharField(max_length=100)
     file = models.FileField(upload_to='employee_documents/')
@@ -62,7 +63,7 @@ class EmployeeDocument(models.Model):
     def __str__(self):
         return f"{self.document_type} for {self.employee}"
     
-class EmergencyContact(models.Model):
+class EmergencyContact(SoftDeleteModel):
     RELATIONSHIP_CHOICES = [
         ('mother', 'Mother'),
         ('father', 'Father'),
@@ -83,7 +84,7 @@ class EmergencyContact(models.Model):
     
 
 # A temporary, task-based, or project-specific responsibility assigned to the employee (Project Lead, Acting Manager, etc.)
-class JobAssignment(models.Model):
+class JobAssignment(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name='assignments')
     title = models.CharField(max_length=100)
     start_date = models.DateField()
@@ -93,7 +94,7 @@ class JobAssignment(models.Model):
     def __str__(self):
         return f"{self.title} assignment for {self.employee}"
     
-class PerformanceReview(models.Model):
+class PerformanceReview(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name='performance_reviews')
     reviewer = models.ForeignKey(USER, on_delete=models.SET_NULL, null=True, related_name='reviews_given')
     review_date = models.DateField()
@@ -103,34 +104,16 @@ class PerformanceReview(models.Model):
     def __str__(self):
         return f"Performance Review for {self.employee} on {self.review_date}"
     
-class Location(models.Model):
+class Location(SoftDeleteModel):
     name = models.CharField(max_length=100)
     address = HTMLField(blank=True)
 
     def __str__(self):
         return self.name
     
-class EmploymentType(models.Model):
+class EmploymentType(SoftDeleteModel):
     type_name = models.CharField(max_length=50)
     description = HTMLField(blank=True)
 
     def __str__(self):
         return self.type_name
-    
-# class LeaveRecord(models.Model):
-#     LEAVE_TYPE_CHOICES = [
-#         ('sick', 'Sick Leave'),
-#         ('vacation', 'Vacation Leave'),
-#         ('maternity', 'Maternity Leave'),
-#         ('paternity', 'Paternity Leave'),
-#         ('unpaid', 'Unpaid Leave'),
-#         ('other', 'Other'),
-#     ]
-#     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='leave_records')
-#     leave_type = models.CharField(max_length=20, choices=LEAVE_TYPE_CHOICES)
-#     start_date = models.DateField()
-#     end_date = models.DateField()
-#     reason = HTMLField(blank=True)
-
-#     def __str__(self):
-#         return f"{self.leave_type} leave for {self.employee} from {self.start_date} to {self.end_date}"

@@ -1,0 +1,105 @@
+[
+
+   
+    {
+        "model": "Auth.customuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$4Wj6mpX9j3JOVJFL6EzNmK$H3l55dHVWims+KMTUFwr46sXUXlstKNoJ7cT47XPCl4=",
+            "last_login": "2025-10-26T10:00:00Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "System",
+            "last_name": "Administrator",
+            "email": "admin@company.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-01-01T00:00:00Z",
+            "phone": "+1234567890",
+            "profile_image": "",
+            "groups": [1],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "Auth.customuser",
+        "pk": 2,
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$4Wj6mpX9j3JOVJFL6EzNmK$H3l55dHVWims+KMTUFwr46sXUXlstKNoJ7cT47XPCl4=",
+            "last_login": "2025-10-25T15:30:00Z",
+            "is_superuser": false,
+            "username": "sarah.hr",
+            "first_name": "Sarah",
+            "last_name": "Johnson",
+            "email": "sarah.j@company.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2025-01-15T00:00:00Z",
+            "phone": "+1234567891",
+            "profile_image": "",
+            "groups": [1],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "Auth.customuser",
+        "pk": 3,
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$4Wj6mpX9j3JOVJFL6EzNmK$H3l55dHVWims+KMTUFwr46sXUXlstKNoJ7cT47XPCl4=",
+            "last_login": "2025-10-24T09:15:00Z",
+            "is_superuser": false,
+            "username": "john.manager",
+            "first_name": "John",
+            "last_name": "Smith",
+            "email": "john.s@company.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-02-01T00:00:00Z",
+            "phone": "+1234567892",
+            "profile_image": "",
+            "groups": [3],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "Auth.customuser",
+        "pk": 4,
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$4Wj6mpX9j3JOVJFL6EzNmK$H3l55dHVWims+KMTUFwr46sXUXlstKNoJ7cT47XPCl4=",
+            "last_login": "2025-10-26T08:00:00Z",
+            "is_superuser": false,
+            "username": "mary.dev",
+            "first_name": "Mary",
+            "last_name": "Brown",
+            "email": "mary.b@company.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-03-15T00:00:00Z",
+            "phone": "+1234567893",
+            "profile_image": "",
+            "groups": [4],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "Auth.customuser",
+        "pk": 5,
+        "fields": {
+            "password": "pbkdf2_sha256$1000000$4Wj6mpX9j3JOVJFL6EzNmK$H3l55dHVWims+KMTUFwr46sXUXlstKNoJ7cT47XPCl4=",
+            "last_login": "2025-10-25T16:45:00Z",
+            "is_superuser": false,
+            "username": "robert.head",
+            "first_name": "Robert",
+            "last_name": "Wilson",
+            "email": "robert.w@company.com",
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2025-01-20T00:00:00Z",
+            "phone": "+1234567894",
+            "profile_image": "",
+            "groups": [2],
+            "user_permissions": []
+        }
+    }
+]
+

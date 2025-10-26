@@ -4,6 +4,7 @@ from django.db.models import JSONField
 from tinymce.models import HTMLField
 from django.utils import timezone
 from Employee.models import *
+from Auth.models import SoftDeleteModel
 
 # Create your models here.
 LEAVE_STATUS = [
@@ -30,7 +31,7 @@ EVENT_TYPE = [
 
 
 
-class Shift(models.Model):
+class Shift(SoftDeleteModel):
     name = models.CharField(max_length=64)
     start_time = models.TimeField()
     end_time = models.TimeField()
@@ -43,7 +44,7 @@ class Shift(models.Model):
         return self.name
 
 
-class Holiday(models.Model):
+class Holiday(SoftDeleteModel):
     name = models.CharField(max_length=128)
     date = models.DateField()
     country = models.CharField(max_length=64, blank=True)
@@ -57,7 +58,7 @@ class Holiday(models.Model):
         return f"{self.name} ({self.date})"
 
 
-class LeaveType(models.Model):
+class LeaveType(SoftDeleteModel):
     name = models.CharField(max_length=64)
     code = models.CharField(max_length=16, unique=True)
     description =HTMLField(blank=True)
@@ -71,7 +72,7 @@ class LeaveType(models.Model):
         return self.name
 
 
-class LeaveAllocation(models.Model):
+class LeaveAllocation(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="allocations")
     leave_type = models.ForeignKey(LeaveType, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()
@@ -86,7 +87,7 @@ class LeaveAllocation(models.Model):
         return f"{self.employee} - {self.leave_type} ({self.year})"
 
 
-class LeaveRequest(models.Model):
+class LeaveRequest(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="leave_requests")
     leave_type = models.ForeignKey(LeaveType, on_delete=models.PROTECT)
     start_date = models.DateField()
@@ -118,7 +119,7 @@ class LeaveRequest(models.Model):
         return f"{self.employee} - {self.leave_type} ({self.start_date} to {self.end_date})"
 
 
-class LeaveApproval(models.Model):
+class LeaveApproval(SoftDeleteModel):
     leave_request = models.ForeignKey(LeaveRequest, on_delete=models.CASCADE, related_name="approvals")
     approver = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True)
     sequence = models.PositiveSmallIntegerField(default=1)
@@ -133,7 +134,7 @@ class LeaveApproval(models.Model):
         return f"Approval {self.sequence} for {self.leave_request}"
 
 
-class LeaveBalance(models.Model):
+class LeaveBalance(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="leave_balances")
     leave_type = models.ForeignKey(LeaveType, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()
@@ -148,7 +149,7 @@ class LeaveBalance(models.Model):
         return f"{self.employee} - {self.leave_type} ({self.year})"
 
 
-class AttendanceEvent(models.Model):
+class AttendanceEvent(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="events")
     timestamp = models.DateTimeField()
     event_type = models.CharField(max_length=16, choices=EVENT_TYPE)
@@ -165,7 +166,7 @@ class AttendanceEvent(models.Model):
         return f"{self.employee} - {self.event_type} at {self.timestamp}"
 
 
-class AttendanceRecord(models.Model):
+class AttendanceRecord(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="attendance_records")
     date = models.DateField()
     shift = models.ForeignKey(Shift, null=True, blank=True, on_delete=models.SET_NULL)
@@ -185,7 +186,7 @@ class AttendanceRecord(models.Model):
         return f"Attendance {self.employee} - {self.date}"
 
 
-class AttendanceCorrectionRequest(models.Model):
+class AttendanceCorrectionRequest(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="corrections")
     date = models.DateField()
     requested_check_in = models.TimeField(null=True, blank=True)
@@ -201,7 +202,7 @@ class AttendanceCorrectionRequest(models.Model):
         return f"Correction {self.employee} - {self.date}"
 
 
-class OvertimeRequest(models.Model):
+class OvertimeRequest(SoftDeleteModel):
     employee = models.ForeignKey(EmployeeProfile, on_delete=models.CASCADE, related_name="overtime_requests")
     date_from = models.DateField()
     date_to = models.DateField()
@@ -213,7 +214,7 @@ class OvertimeRequest(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
-class WorkWeek(models.Model):
+class WorkWeek(SoftDeleteModel):
     name = models.CharField(max_length=64, default="Default")
     configuration = JSONField(default=dict)  # e.g. {"mon": {"working": True, "start":"09:00","end":"17:00"}, ...}
     notes =HTMLField(blank=True)

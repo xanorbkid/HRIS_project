@@ -1,0 +1,90 @@
+[
+    {
+        "model": "Employee.employeeprofile",
+        "pk": 1,
+        "fields": {
+            "user": 2,
+            "department": 1,
+            "job_title": 1,
+            "manager": null,
+            "date_joined": "2025-01-15",
+            "employment_type": "full_time",
+            "salary": "75000.00",
+            "bank_details": {
+                "bank_name": "Example Bank",
+                "account_number": "XXXX1234",
+                "routing_number": "XXXXX5678"
+            },
+            "status": "active",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Employee.employeeprofile",
+        "pk": 2,
+        "fields": {
+            "user": 3,
+            "department": 2,
+            "job_title": 3,
+            "manager": null,
+            "date_joined": "2025-02-01",
+            "employment_type": "full_time",
+            "salary": "95000.00",
+            "bank_details": {
+                "bank_name": "Example Bank",
+                "account_number": "XXXX2345",
+                "routing_number": "XXXXX6789"
+            },
+            "status": "active",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Employee.employeeprofile",
+        "pk": 3,
+        "fields": {
+            "user": 4,
+            "department": 2,
+            "job_title": 5,
+            "manager": 2,
+            "date_joined": "2025-03-15",
+            "employment_type": "full_time",
+            "salary": "85000.00",
+            "bank_details": {
+                "bank_name": "Example Bank",
+                "account_number": "XXXX3456",
+                "routing_number": "XXXXX7890"
+            },
+            "status": "active",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Employee.employeeprofile",
+        "pk": 4,
+        "fields": {
+            "user": 5,
+            "department": 4,
+            "job_title": 3,
+            "manager": null,
+            "date_joined": "2025-01-20",
+            "employment_type": "full_time",
+            "salary": "92000.00",
+            "bank_details": {
+                "bank_name": "Example Bank",
+                "account_number": "XXXX4567",
+                "routing_number": "XXXXX8901"
+            },
+            "status": "active",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]

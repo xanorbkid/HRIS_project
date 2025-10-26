@@ -1,0 +1,44 @@
+[
+    {
+        "model": "Employee.emergencycontact",
+        "pk": 1,
+        "fields": {
+            "employee": 1,
+            "name": "Michael Johnson",
+            "relationship": "spouse",
+            "phone": "+1234567895",
+            "email": "michael.j@email.com",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Employee.emergencycontact",
+        "pk": 2,
+        "fields": {
+            "employee": 2,
+            "name": "Emma Smith",
+            "relationship": "spouse",
+            "phone": "+1234567896",
+            "email": "emma.s@email.com",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Employee.emergencycontact",
+        "pk": 3,
+        "fields": {
+            "employee": 3,
+            "name": "James Brown",
+            "relationship": "father",
+            "phone": "+1234567897",
+            "email": "james.b@email.com",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
