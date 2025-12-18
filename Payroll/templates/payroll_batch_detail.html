@@ -1,0 +1,53 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block title %}Payroll Batch Details{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mb-3">
+                <h4 class="fw-bold mb-1">Payroll Batch: {{ batch.batch_name }}</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Batch Name</dt>
+                            <dd class="col-sm-8">{{ batch.batch_name }}</dd>
+
+                            <dt class="col-sm-4">Pay Period</dt>
+                            <dd class="col-sm-8">{{ batch.pay_period_start|date:"M d, Y" }} - {{ batch.pay_period_end|date:"M d, Y" }}</dd>
+
+                            <dt class="col-sm-4">Generated On</dt>
+                            <dd class="col-sm-8">{{ batch.generated_on|date:"M d, Y H:i" }}</dd>
+
+                            <dt class="col-sm-4">Status</dt>
+                            <dd class="col-sm-8">
+                                {% if batch.status == "DRAFT" %}
+                                    <span class="badge bg-secondary">Draft</span>
+                                {% elif batch.status == "APPROVED" %}
+                                    <span class="badge bg-success">Approved</span>
+                                {% else %}
+                                    <span class="badge bg-primary">Paid</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-4">Processed By</dt>
+                            <dd class="col-sm-8">{{ batch.processed_by|default:"—" }}</dd>
+                        </dl>
+                        <div class="mt-3">
+                            <a href="{% url 'payroll_processing' %}" class="btn btn-secondary">Back to List</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

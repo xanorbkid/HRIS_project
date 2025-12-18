@@ -1,0 +1,60 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper p-4">
+
+    <h3 class="fw-bold mb-4" style="color:#0A2342;">Salary Structure</h3>
+
+    <div class="card shadow-sm p-3">
+        <div class="d-flex justify-content-between mb-3">
+            <h5>Available Structures</h5>
+            <a href="{% url 'salary_structure_create' %}" class="btn btn-primary btn-sm" style="background:#0A2342;">Add Structure</a>
+        </div>
+
+        {% for structure in structures %}
+        <div class="mb-4 p-3 border rounded">
+
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h6 class="fw-bold mb-1">{{ structure.name }}</h6>
+                    <small class="text-muted">Total: ${{ structure.total_amount|floatformat:2 }}</small>
+                </div>
+                <div>
+                    <a href="{% url 'salary_structure_edit' structure.id %}" class="btn btn-outline-primary btn-sm">Edit</a>
+                    <a href="{% url 'salary_structure_delete' structure.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                </div>
+            </div>
+
+            <hr>
+
+            <h6 class="text-secondary">Components</h6>
+            <table class="table table-sm table-bordered">
+                <thead class="text-white" style="background:#0A2342;">
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                {% for comp in structure.components.all %}
+                    <tr>
+                        <td>{{ comp.name }}</td>
+                        <td>{{ comp.type }}</td>
+                        <td>${{ comp.amount }}</td>
+                    </tr>
+                {% empty %}
+                    <tr><td colspan="3">No components added.</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+        {% endfor %}
+
+    </div>
+
+</div>
+{% endblock %}

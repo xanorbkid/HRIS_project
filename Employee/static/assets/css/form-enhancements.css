@@ -1,0 +1,61 @@
+.form-control,
+.form-select,
+.form-check-input,
+.modal-body input:not([type="checkbox"]):not([type="radio"]),
+.modal-body select,
+.modal-body textarea {
+  border-radius: 0.65rem;
+  border-color: #e1e5eb;
+  background-color: #fdfdfd;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus,
+.modal-body input:not([type="checkbox"]):not([type="radio"]):focus,
+.modal-body select:focus,
+.modal-body textarea:focus {
+  border-color: #5e72e4;
+  box-shadow: 0 0 0 0.2rem rgba(94, 114, 228, 0.15);
+  background-color: #fff;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #344767;
+}
+
+.form-group,
+.mb-3 {
+  padding: 0.25rem 0;
+}
+
+.modal-body input:not([type="checkbox"]):not([type="radio"]),
+.modal-body select,
+.modal-body textarea {
+  background-color: #f8fafc;
+}
+
+.modal-body input:not([type="checkbox"]):not([type="radio"]):focus,
+.modal-body select:focus,
+.modal-body textarea:focus {
+  background-color: #fff;
+}
+
+.form-check-input:checked {
+  background-color: #5e72e4;
+  border-color: #5e72e4;
+}
+
+.form-floating .form-control:focus ~ label,
+.form-floating .form-select:focus ~ label {
+  color: #5e72e4;
+}
+
+.form-control::placeholder,
+.form-select::placeholder,
+.modal-body textarea::placeholder,
+.modal-body input::placeholder {
+  color: #b0bac9;
+}

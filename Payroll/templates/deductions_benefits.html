@@ -1,0 +1,88 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content-wrapper p-4">
+
+    <h3 class="fw-bold mb-4" style="color:#0A2342;">Deductions & Benefits</h3>
+
+    <div class="row">
+
+        <!-- DEDUCTIONS -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3">
+                <div class="d-flex justify-content-between mb-3">
+                    <h5>Deductions</h5>
+                    <a href="{% url 'deduction_create' %}" class="btn btn-primary btn-sm" style="background:#0A2342;">Add</a>
+                </div>
+
+                <table class="table table-hover table-bordered">
+                    <thead class="text-white" style="background:#0A2342;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for d in deductions %}
+                        <tr>
+                            <td>{{ d.name }}</td>
+                            <td>${{ d.default_amount }}</td>
+                            <td>
+                                <a href="{% url 'deduction_edit' d.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a href="{% url 'deduction_delete' d.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3">No deductions defined.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+        <!-- BENEFITS -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-3">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <h5>Benefits</h5>
+                    <a href="{% url 'benefit_create' %}" class="btn btn-primary btn-sm" style="background:#0A2342;">Add</a>
+                </div>
+
+                <table class="table table-hover table-bordered">
+                    <thead class="text-white" style="background:#0A2342;">
+                        <tr>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for b in benefits %}
+                        <tr>
+                            <td>{{ b.name }}</td>
+                            <td>${{ b.default_value }}</td>
+                            <td>
+                                <a href="{% url 'benefit_edit' b.id %}" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a href="{% url 'benefit_delete' b.id %}" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3">No benefits defined.</td></tr>
+                        {% endfor %}
+                    </tbody>
+
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}Company Policies{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">Policies & Procedures</h4>
+                    <p class="text-muted mb-0">Download the latest HR, IT, and compliance policies.</p>
+                </div>
+                <a href="{% url 'upload_policy' %}" class="btn btn-primary btn-sm">Upload Policy</a>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            {% if policies %}
+                {% for policy in policies %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <span class="badge bg-light text-dark text-uppercase mb-2">
+                                    {{ policy.get_category_display }}
+                                </span>
+                                <h5 class="fw-bold mb-2">{{ policy.title }}</h5>
+                                <p class="text-muted flex-grow-1">
+                                    {% if policy.description %}
+                                        {{ policy.description|striptags|truncatechars:120 }}
+                                    {% else %}
+                                        <em>No description provided.</em>
+                                    {% endif %}
+                                </p>
+                                <div class="small text-muted mb-2">
+                                    Effective {{ policy.effective_date|date:"M d, Y" }}
+                                    {% if policy.department %}
+                                        · {{ policy.department }}
+                                    {% endif %}
+                                </div>
+                                <a class="btn btn-outline-primary btn-sm mt-auto" href="{{ policy.file.url }}" target="_blank">
+                                    View Document
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center text-muted">
+                            No policies have been uploaded.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+

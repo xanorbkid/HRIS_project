@@ -1,0 +1,113 @@
+[
+    {
+        "model": "Recruitment.jobopening",
+        "pk": 1,
+        "fields": {
+            "title": "Senior Software Developer",
+            "department": 2,
+            "job_title": 1,
+            "employment_type": "full_time",
+            "location": "Remote / New York Office",
+            "description": "<p>We are looking for an experienced Senior Software Developer to join our IT team. You will be responsible for designing and developing scalable web applications using modern technologies.</p>",
+            "requirements": "<ul><li>5+ years of experience in software development</li><li>Proficiency in Python, Django, and React</li><li>Strong problem-solving skills</li><li>Experience with cloud platforms (AWS/Azure)</li></ul>",
+            "openings": 2,
+            "salary_range": "$80,000 - $120,000",
+            "posted_by": 1,
+            "status": "OPEN",
+            "posted_date": "2025-01-15",
+            "closing_date": "2025-04-15",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.jobopening",
+        "pk": 2,
+        "fields": {
+            "title": "HR Business Partner",
+            "department": 1,
+            "job_title": 2,
+            "employment_type": "full_time",
+            "location": "New York Office",
+            "description": "<p>Join our HR team as a Business Partner. You will work closely with department heads to implement HR strategies and support employee development.</p>",
+            "requirements": "<ul><li>Bachelor's degree in HR or related field</li><li>3+ years of HR experience</li><li>Strong communication and interpersonal skills</li><li>Knowledge of employment laws</li></ul>",
+            "openings": 1,
+            "salary_range": "$60,000 - $85,000",
+            "posted_by": 1,
+            "status": "OPEN",
+            "posted_date": "2025-02-01",
+            "closing_date": "2025-05-01",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.jobopening",
+        "pk": 3,
+        "fields": {
+            "title": "Financial Analyst",
+            "department": 3,
+            "job_title": 3,
+            "employment_type": "full_time",
+            "location": "New York Office",
+            "description": "<p>We are seeking a Financial Analyst to support our finance team with budgeting, forecasting, and financial reporting.</p>",
+            "requirements": "<ul><li>Bachelor's degree in Finance or Accounting</li><li>2+ years of financial analysis experience</li><li>Proficiency in Excel and financial modeling</li><li>Strong analytical skills</li></ul>",
+            "openings": 1,
+            "salary_range": "$55,000 - $75,000",
+            "posted_by": 1,
+            "status": "OPEN",
+            "posted_date": "2025-02-10",
+            "closing_date": "2025-05-10",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.jobopening",
+        "pk": 4,
+        "fields": {
+            "title": "Operations Manager",
+            "department": 4,
+            "job_title": 4,
+            "employment_type": "full_time",
+            "location": "New York Office",
+            "description": "<p>Lead our operations team and ensure smooth day-to-day business operations. Manage logistics, vendor relationships, and process improvements.</p>",
+            "requirements": "<ul><li>5+ years of operations management experience</li><li>Strong leadership and organizational skills</li><li>Experience with process optimization</li><li>Bachelor's degree in Business or related field</li></ul>",
+            "openings": 1,
+            "salary_range": "$70,000 - $95,000",
+            "posted_by": 1,
+            "status": "FILLED",
+            "posted_date": "2025-01-05",
+            "closing_date": "2025-03-05",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.jobopening",
+        "pk": 5,
+        "fields": {
+            "title": "Junior Frontend Developer",
+            "department": 2,
+            "job_title": 5,
+            "employment_type": "full_time",
+            "location": "Remote",
+            "description": "<p>Entry-level position for a Junior Frontend Developer. Great opportunity to learn and grow with our development team.</p>",
+            "requirements": "<ul><li>1-2 years of frontend development experience</li><li>Knowledge of HTML, CSS, JavaScript</li><li>Familiarity with React or Vue.js</li><li>Strong willingness to learn</li></ul>",
+            "openings": 2,
+            "salary_range": "$45,000 - $60,000",
+            "posted_by": 1,
+            "status": "OPEN",
+            "posted_date": "2025-03-01",
+            "closing_date": "2025-06-01",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

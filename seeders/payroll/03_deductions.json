@@ -1,0 +1,51 @@
+[
+    {
+        "model": "Payroll.deduction",
+        "pk": 1,
+        "fields": {
+            "name": "Late Arrival Deduction",
+            "description": "Deduction for late arrivals to work",
+            "default_amount": "50.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.deduction",
+        "pk": 2,
+        "fields": {
+            "name": "Loan Repayment",
+            "description": "Monthly loan repayment deduction",
+            "default_amount": "500.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.deduction",
+        "pk": 3,
+        "fields": {
+            "name": "Advance Salary Deduction",
+            "description": "Deduction for salary advance taken",
+            "default_amount": "300.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.deduction",
+        "pk": 4,
+        "fields": {
+            "name": "Equipment Damage",
+            "description": "Deduction for damaged company equipment",
+            "default_amount": "200.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

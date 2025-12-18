@@ -1,0 +1,276 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title|default:"Attendance Records" }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mb-4">
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div>
+                        <h4 class="mb-1 fw-bold">{{ page_title|default:"Attendance Records" }}</h4>
+                        <p class="text-muted mb-0">Daily time punches and shift assignments.</p>
+                    </div>
+                    <div class="d-flex gap-2 flex-wrap">
+                        <a class="btn btn-outline-primary btn-sm" href="{% url 'attendance_list' %}">
+                            Refresh
+                        </a>
+                        {% if can_manage_attendance %}
+                            <button
+                                class="btn btn-primary btn-sm"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#attendanceModal"
+                                id="addAttendanceBtn"
+                                data-default-employee="{{ default_attendance_employee }}"
+                                data-default-date="{{ default_attendance_date }}"
+                            >
+                                <i class="fas fa-plus me-1"></i> Log Attendance
+                            </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body table-responsive">
+                        <table class="table align-middle table-striped mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Employee</th>
+                                    <th>Date</th>
+                                    <th>Shift</th>
+                                    <th>Check In</th>
+                                    <th>Check Out</th>
+                                    <th>Status</th>
+                                    <th>Worked Hours</th>
+                                    <th>Overtime</th>
+                                    {% if can_manage_attendance %}
+                                        <th class="text-end">Action</th>
+                                    {% endif %}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if records %}
+                                    {% for record in records %}
+                                        <tr>
+                                            <td>{{ record.employee }}</td>
+                                            <td>{{ record.date|date:"M d, Y" }}</td>
+                                            <td>{{ record.shift|default:"—" }}</td>
+                                            <td>{{ record.check_in|default:"—" }}</td>
+                                            <td>{{ record.check_out|default:"—" }}</td>
+                                            <td>
+                                                <span class="badge bg-light text-dark text-uppercase">
+                                                    {{ record.get_status_display }}
+                                                </span>
+                                            </td>
+                                            <td>{{ record.worked_hours|default:"0" }} h</td>
+                                            <td>{{ record.overtime_hours|default:"0" }} h</td>
+                                            {% if can_manage_attendance %}
+                                                <td class="text-end">
+                                                    <button
+                                                        class="btn btn-link btn-sm text-secondary js-edit-attendance"
+                                                        type="button"
+                                                        data-edit-url="{% url 'attendance_edit' record.id %}"
+                                                        data-employee="{{ record.employee_id }}"
+                                                        data-date="{{ record.date|date:'Y-m-d' }}"
+                                                        data-shift="{{ record.shift_id|default:'' }}"
+                                                        data-check-in="{{ record.check_in|default_if_none:'' }}"
+                                                        data-check-out="{{ record.check_out|default_if_none:'' }}"
+                                                        data-status="{{ record.status }}"
+                                                        data-worked="{{ record.worked_hours|default:'' }}"
+                                                        data-overtime="{{ record.overtime_hours|default:'' }}"
+                                                        data-notes="{{ record.notes|striptags|escape }}"
+                                                    >
+                                                        <i class="fas fa-edit"></i>
+                                                    </button>
+                                                    <button
+                                                        class="btn btn-link btn-sm text-danger js-delete-attendance"
+                                                        type="button"
+                                                        data-delete-url="{% url 'attendance_delete' record.id %}"
+                                                        data-employee-name="{{ record.employee }}"
+                                                        data-record-date="{{ record.date|date:'M d, Y' }}"
+                                                    >
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="{% if can_manage_attendance %}9{% else %}8{% endif %}" class="text-center text-muted py-4">
+                                            No attendance records were found.
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+</div>
+{% endblock %}
+
+{% if can_manage_attendance %}
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="attendanceModal" tabindex="-1" aria-labelledby="attendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="attendanceForm" action="{% url 'attendance_create' %}" data-create-url="{% url 'attendance_create' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="attendanceModalLabel">Log Attendance</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="{{ attendance_form.employee.id_for_label }}">Employee</label>
+                            {{ attendance_form.employee }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="{{ attendance_form.date.id_for_label }}">Date</label>
+                            {{ attendance_form.date }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label" for="{{ attendance_form.shift.id_for_label }}">Shift</label>
+                            {{ attendance_form.shift }}
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="{{ attendance_form.check_in.id_for_label }}">Check In</label>
+                            {{ attendance_form.check_in }}
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <label class="form-label" for="{{ attendance_form.check_out.id_for_label }}">Check Out</label>
+                            {{ attendance_form.check_out }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="{{ attendance_form.status.id_for_label }}">Status</label>
+                            {{ attendance_form.status }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="{{ attendance_form.worked_hours.id_for_label }}">Worked Hours</label>
+                            {{ attendance_form.worked_hours }}
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="{{ attendance_form.overtime_hours.id_for_label }}">Overtime Hours</label>
+                            {{ attendance_form.overtime_hours }}
+                        </div>
+                    </div>
+                    <div class="mb-0">
+                        <label class="form-label" for="{{ attendance_form.notes.id_for_label }}">Notes</label>
+                        {{ attendance_form.notes }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="attendanceFormSubmit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteAttendanceModal" tabindex="-1" aria-labelledby="deleteAttendanceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="deleteAttendanceForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAttendanceModalLabel">Delete Attendance Record</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Delete attendance for <strong id="attendanceDeleteEmployee"></strong> on <strong id="attendanceDeleteDate"></strong>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% block extra_scripts %}
+{{ block.super }}
+{% if can_manage_attendance %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const attendanceModal = document.getElementById('attendanceModal');
+    const attendanceForm = document.getElementById('attendanceForm');
+    const attendanceModalLabel = document.getElementById('attendanceModalLabel');
+    const attendanceFormSubmit = document.getElementById('attendanceFormSubmit');
+    const addAttendanceBtn = document.getElementById('addAttendanceBtn');
+    const deleteAttendanceModalEl = document.getElementById('deleteAttendanceModal');
+    const deleteAttendanceForm = document.getElementById('deleteAttendanceForm');
+    const deleteEmployeeLabel = document.getElementById('attendanceDeleteEmployee');
+    const deleteDateLabel = document.getElementById('attendanceDeleteDate');
+
+    const resetAttendanceForm = () => {
+        attendanceForm.reset();
+        attendanceForm.action = attendanceForm.dataset.createUrl;
+        attendanceModalLabel.textContent = 'Log Attendance';
+        attendanceFormSubmit.textContent = 'Save';
+        const defaultEmployee = addAttendanceBtn?.dataset.defaultEmployee || '';
+        const defaultDate = addAttendanceBtn?.dataset.defaultDate || '';
+        if (defaultEmployee) {
+            attendanceForm.querySelector('[name="employee"]').value = defaultEmployee;
+        }
+        if (defaultDate) {
+            attendanceForm.querySelector('[name="date"]').value = defaultDate;
+        }
+    };
+
+    addAttendanceBtn?.addEventListener('click', () => {
+        resetAttendanceForm();
+        const modalInstance = bootstrap.Modal.getOrCreateInstance(attendanceModal);
+        modalInstance.show();
+    });
+
+    document.querySelectorAll('.js-edit-attendance').forEach((button) => {
+        button.addEventListener('click', () => {
+            resetAttendanceForm();
+            attendanceModalLabel.textContent = 'Edit Attendance';
+            attendanceFormSubmit.textContent = 'Update';
+            attendanceForm.action = button.dataset.editUrl;
+            attendanceForm.querySelector('[name="employee"]').value = button.dataset.employee || '';
+            attendanceForm.querySelector('[name="date"]').value = button.dataset.date || '';
+            attendanceForm.querySelector('[name="shift"]').value = button.dataset.shift || '';
+            attendanceForm.querySelector('[name="check_in"]').value = button.dataset.checkIn || '';
+            attendanceForm.querySelector('[name="check_out"]').value = button.dataset.checkOut || '';
+            attendanceForm.querySelector('[name="status"]').value = button.dataset.status || '';
+            attendanceForm.querySelector('[name="worked_hours"]').value = button.dataset.worked || '';
+            attendanceForm.querySelector('[name="overtime_hours"]').value = button.dataset.overtime || '';
+            attendanceForm.querySelector('[name="notes"]').value = button.dataset.notes || '';
+            const modalInstance = new bootstrap.Modal(attendanceModal);
+            modalInstance.show();
+        });
+    });
+
+    document.querySelectorAll('.js-delete-attendance').forEach((button) => {
+        button.addEventListener('click', () => {
+            deleteAttendanceForm.action = button.dataset.deleteUrl;
+            deleteEmployeeLabel.textContent = button.dataset.employeeName;
+            deleteDateLabel.textContent = button.dataset.recordDate;
+            const deleteModal = new bootstrap.Modal(deleteAttendanceModalEl);
+            deleteModal.show();
+        });
+    });
+
+    attendanceModal?.addEventListener('hidden.bs.modal', resetAttendanceForm);
+});
+</script>
+{% endif %}
+{% endblock %}

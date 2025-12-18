@@ -1,0 +1,203 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block content %}
+<br />
+<br />
+<br />
+<div class="container-fluid mt-4">
+  <div class="card">
+
+    <!-- Header with Add Button -->
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Interviews & Hiring</h4>
+      <button type="button" class="btn btn-primary btn-sm" id="addInterviewBtn" data-bs-toggle="modal" data-bs-target="#interviewModal">
+        Schedule Interview
+      </button>
+    </div>
+
+    <div class="card-body">
+      {% if interviews %}
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+              <th>Applicant</th>
+              <th>Type</th>
+              <th>Interviewer</th>
+              <th>Date</th>
+              <th>Result</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for interview in interviews %}
+            <tr>
+              <td>{{ interview.applicant }}</td>
+              <td>{{ interview.get_interview_type_display }}</td>
+              <td>{{ interview.interviewer|default:"Unassigned" }}</td>
+              <td>{{ interview.scheduled_date|date:"M d, Y H:i" }}</td>
+
+              <td>
+                <span class="badge 
+                  {% if interview.result == 'PASSED' %}bg-success
+                  {% elif interview.result == 'FAILED' %}bg-danger
+                  {% else %}bg-warning{% endif %}">
+                  {{ interview.result }}
+                </span>
+              </td>
+
+              <!-- CRUD Buttons -->
+              <td class="d-flex gap-2">
+                <a href="{% url 'interview-detail' interview.id %}" class="btn btn-outline-secondary btn-sm">View</a>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm js-edit-interview"
+                  data-bs-toggle="modal"
+                  data-bs-target="#interviewModal"
+                  data-edit-url="{% url 'interview-edit' interview.id %}"
+                  data-applicant="{{ interview.applicant.id }}"
+                  data-interviewer="{{ interview.interviewer.id|default:'' }}"
+                  data-type="{{ interview.interview_type }}"
+                  data-date="{{ interview.scheduled_date|date:'Y-m-d\\TH:i' }}"
+                  data-duration="{{ interview.duration_minutes }}"
+                  data-location="{{ interview.location|default:''|escape }}"
+                  data-feedback="{{ interview.feedback|default:''|escape }}"
+                  data-rating="{{ interview.rating|default:'' }}"
+                  data-result="{{ interview.result }}"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm js-delete-interview"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteInterviewModal"
+                  data-delete-url="{% url 'interview-delete' interview.id %}"
+                  data-interview-name="{{ interview.applicant }}"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+      {% else %}
+        <p class="text-center text-muted">No interviews scheduled.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="interviewModal" tabindex="-1" aria-labelledby="interviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" id="interviewForm" data-create-url="{% url 'interview-create' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="interviewModalLabel">Schedule Interview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for field in interview_form %}
+            <div class="mb-3">
+              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="interviewFormSubmit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteInterviewModal" tabindex="-1" aria-labelledby="deleteInterviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" id="deleteInterviewForm">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteInterviewModalLabel">Delete Interview</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">Delete interview for <span class="fw-bold" id="interviewToDelete"></span>?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const interviewModal = document.getElementById('interviewModal');
+  const interviewForm = document.getElementById('interviewForm');
+  const interviewModalLabel = document.getElementById('interviewModalLabel');
+  const interviewFormSubmit = document.getElementById('interviewFormSubmit');
+  const addInterviewBtn = document.getElementById('addInterviewBtn');
+  const deleteInterviewForm = document.getElementById('deleteInterviewForm');
+  const interviewToDelete = document.getElementById('interviewToDelete');
+
+  const setField = (name, value) => {
+    const field = interviewForm.querySelector(`[name="${name}"]`);
+    if (!field) return;
+    field.value = value || '';
+  };
+
+  const resetForm = () => {
+    interviewForm.reset();
+    interviewForm.action = interviewForm.dataset.createUrl;
+    interviewModalLabel.textContent = 'Schedule Interview';
+    interviewFormSubmit.textContent = 'Save';
+  };
+
+  addInterviewBtn.addEventListener('click', resetForm);
+
+  document.querySelectorAll('.js-edit-interview').forEach((button) => {
+    button.addEventListener('click', () => {
+      resetForm();
+      interviewForm.action = button.dataset.editUrl;
+      interviewModalLabel.textContent = 'Edit Interview';
+      interviewFormSubmit.textContent = 'Update';
+      setField('applicant', button.dataset.applicant || '');
+      setField('interviewer', button.dataset.interviewer || '');
+      setField('interview_type', button.dataset.type || '');
+      setField('scheduled_date', button.dataset.date || '');
+      setField('duration_minutes', button.dataset.duration || '');
+      setField('location', button.dataset.location || '');
+      setField('feedback', button.dataset.feedback || '');
+      setField('rating', button.dataset.rating || '');
+      setField('result', button.dataset.result || '');
+    });
+  });
+
+  document.querySelectorAll('.js-delete-interview').forEach((button) => {
+    button.addEventListener('click', () => {
+      deleteInterviewForm.action = button.dataset.deleteUrl;
+      interviewToDelete.textContent = button.dataset.interviewName;
+    });
+  });
+
+  interviewModal.addEventListener('hidden.bs.modal', resetForm);
+});
+</script>
+{% endblock %}

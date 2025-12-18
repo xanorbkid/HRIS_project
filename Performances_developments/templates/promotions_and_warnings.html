@@ -1,0 +1,95 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}Promotions & Warnings{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12">
+                <h4 class="fw-bold mb-1">Talent Movements</h4>
+                <p class="text-muted mb-0">Trace recent promotions as well as corrective actions.</p>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header bg-transparent">
+                        <h5 class="mb-0">Promotions</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if promotions %}
+                            <div class="timeline">
+                                {% for promotion in promotions %}
+                                    <div class="mb-4 pb-3 border-bottom">
+                                        <div class="d-flex justify-content-between">
+                                            <div>
+                                                <strong>{{ promotion.employee }}</strong>
+                                                <p class="mb-0 text-muted small">
+                                                    {{ promotion.previous_position }} → {{ promotion.new_position }}
+                                                </p>
+                                            </div>
+                                            <span class="badge bg-success text-white">
+                                                {{ promotion.effective_date|date:"M d, Y" }}
+                                            </span>
+                                        </div>
+                                        {% if promotion.remarks %}
+                                            <p class="mb-0 text-muted small mt-2">
+                                                {{ promotion.remarks|safe }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">No promotions recorded.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header bg-transparent">
+                        <h5 class="mb-0">Warnings</h5>
+                    </div>
+                    <div class="card-body">
+                        {% if warnings %}
+                            <div class="list-group list-group-flush">
+                                {% for warning in warnings %}
+                                    <div class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <strong>{{ warning.employee }}</strong>
+                                                <p class="mb-0 text-muted small">
+                                                    Issued {{ warning.warning_date|date:"M d, Y" }} · {{ warning.get_severity_display }}
+                                                </p>
+                                            </div>
+                                            <span class="badge bg-light text-dark">
+                                                {{ warning.issued_by|default:"HR" }}
+                                            </span>
+                                        </div>
+                                        <p class="mt-2 mb-1 text-muted small">
+                                            {{ warning.reason|safe }}
+                                        </p>
+                                        {% if warning.action_taken %}
+                                            <p class="text-muted small mb-0">
+                                                Action: {{ warning.action_taken|safe }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">No warnings on record.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

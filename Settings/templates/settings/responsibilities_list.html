@@ -1,0 +1,161 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}Responsibilities{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">Responsibilities</h4>
+                    <p class="text-muted mb-0">All roles and responsibilities in the HRIS.</p>
+                </div>
+                <button class="btn btn-primary btn-sm" id="addResponsibilityBtn" data-bs-toggle="modal" data-bs-target="#responsibilityModal">
+                    Add Responsibility
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            {% if responsibilities %}
+                {% for responsibility in responsibilities %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="fw-bold mb-2">{{ responsibility.name }}</h5>
+                                <div class="d-flex gap-2 flex-wrap mt-auto">
+                                    <a href="{% url 'responsibility_detail' responsibility.id %}" class="btn btn-outline-secondary btn-sm">
+                                        View
+                                    </a>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm js-edit-responsibility"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#responsibilityModal"
+                                        data-edit-url="{% url 'edit_responsibility' responsibility.id %}"
+                                        data-name="{{ responsibility.name }}"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-danger btn-sm js-delete-responsibility"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteResponsibilityModal"
+                                        data-delete-url="{% url 'delete_responsibility' responsibility.id %}"
+                                        data-responsibility-name="{{ responsibility.name }}"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center text-muted">
+                            No responsibilities have been added yet.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="responsibilityModal" tabindex="-1" aria-labelledby="responsibilityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="responsibilityForm" data-create-url="{% url 'create_responsibility' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="responsibilityModalLabel">Add Responsibility</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for field in responsibility_form %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="responsibilityFormSubmit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteResponsibilityModal" tabindex="-1" aria-labelledby="deleteResponsibilityModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="deleteResponsibilityForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteResponsibilityModalLabel">Delete Responsibility</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Are you sure you want to delete <span class="fw-bold" id="responsibilityToDelete"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('responsibilityModal');
+    const form = document.getElementById('responsibilityForm');
+    const modalLabel = document.getElementById('responsibilityModalLabel');
+    const submitBtn = document.getElementById('responsibilityFormSubmit');
+    const addBtn = document.getElementById('addResponsibilityBtn');
+    const deleteForm = document.getElementById('deleteResponsibilityForm');
+    const responsibilityToDelete = document.getElementById('responsibilityToDelete');
+
+    const resetForm = () => {
+        form.reset();
+        form.action = form.dataset.createUrl;
+        modalLabel.textContent = 'Add Responsibility';
+        submitBtn.textContent = 'Save';
+    };
+
+    addBtn.addEventListener('click', resetForm);
+
+    document.querySelectorAll('.js-edit-responsibility').forEach((button) => {
+        button.addEventListener('click', () => {
+            resetForm();
+            modalLabel.textContent = 'Edit Responsibility';
+            submitBtn.textContent = 'Update';
+            form.action = button.dataset.editUrl;
+            form.querySelector('[name="name"]').value = button.dataset.name;
+        });
+    });
+
+    document.querySelectorAll('.js-delete-responsibility').forEach((button) => {
+        button.addEventListener('click', () => {
+            deleteForm.action = button.dataset.deleteUrl;
+            responsibilityToDelete.textContent = button.dataset.responsibilityName;
+        });
+    });
+
+    modal.addEventListener('hidden.bs.modal', resetForm);
+});
+</script>
+{% endblock %}

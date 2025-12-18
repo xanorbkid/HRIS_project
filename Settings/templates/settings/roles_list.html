@@ -1,0 +1,206 @@
+{% extends 'components/base.html' %}
+
+{% block title %}Roles{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">Roles</h4>
+                    <p class="text-muted mb-0">Manage custom roles that can be assigned to users.</p>
+                </div>
+                <button class="btn btn-primary btn-sm" id="addRoleBtn" data-bs-toggle="modal" data-bs-target="#roleModal">
+                    Add Role
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            {% if roles %}
+                {% for role in roles %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <h5 class="fw-bold mb-0">{{ role.name }}</h5>
+                                    {% if role.is_active %}
+                                        <span class="badge bg-success">Active</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">Inactive</span>
+                                    {% endif %}
+                                </div>
+                                {% if role.description %}
+                                    <p class="text-muted mb-2">{{ role.description }}</p>
+                                {% endif %}
+                                <p class="text-muted mb-1">Permission Groups: {{ role.permission_groups.count }}</p>
+                                <p class="text-muted mb-2">Direct Permissions: {{ role.permissions.count }}</p>
+
+                                <div class="mb-2">
+                                    <small class="text-muted text-uppercase">Groups</small>
+                                    <div class="d-flex flex-wrap gap-1 mt-1">
+                                        {% if role.permission_groups.all %}
+                                            {% for group in role.permission_groups.all %}
+                                                <span class="badge bg-light text-dark border">{{ group.name }}</span>
+                                            {% endfor %}
+                                        {% else %}
+                                            <span class="text-muted small">None assigned</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="d-flex gap-2 flex-wrap mt-auto">
+                                    <a href="{% url 'role_detail' role.id %}" class="btn btn-outline-secondary btn-sm">
+                                        View
+                                    </a>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm js-edit-role"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#roleModal"
+                                        data-edit-url="{% url 'edit_role' role.id %}"
+                                        data-name="{{ role.name }}"
+                                        data-description="{{ role.description|default:'' }}"
+                                        data-is-active="{{ role.is_active|yesno:'true,false' }}"
+                                        data-permission-groups="{{ role.permission_group_ids|join:',' }}"
+                                        data-permissions="{{ role.permission_ids|join:',' }}"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-danger btn-sm js-delete-role"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteRoleModal"
+                                        data-delete-url="{% url 'delete_role' role.id %}"
+                                        data-role-name="{{ role.name }}"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center text-muted">
+                            No roles available yet.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="roleModal" tabindex="-1" aria-labelledby="roleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="roleForm" data-create-url="{% url 'create_role' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="roleModalLabel">Add Role</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for field in role_form %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="roleFormSubmit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" aria-labelledby="deleteRoleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="deleteRoleForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteRoleModalLabel">Delete Role</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Delete <span class="fw-bold" id="roleToDelete"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const roleModal = document.getElementById('roleModal');
+    const roleForm = document.getElementById('roleForm');
+    const roleModalLabel = document.getElementById('roleModalLabel');
+    const roleFormSubmit = document.getElementById('roleFormSubmit');
+    const addRoleBtn = document.getElementById('addRoleBtn');
+    const deleteRoleForm = document.getElementById('deleteRoleForm');
+    const roleToDelete = document.getElementById('roleToDelete');
+
+    const setMultiSelect = (selectEl, values) => {
+        const normalized = values.filter(Boolean);
+        Array.from(selectEl.options).forEach((option) => {
+            option.selected = normalized.includes(option.value);
+        });
+    };
+
+    const resetForm = () => {
+        roleForm.reset();
+        roleForm.action = roleForm.dataset.createUrl;
+        roleModalLabel.textContent = 'Add Role';
+        roleFormSubmit.textContent = 'Save';
+    };
+
+    addRoleBtn.addEventListener('click', resetForm);
+
+    document.querySelectorAll('.js-edit-role').forEach((button) => {
+        button.addEventListener('click', () => {
+            resetForm();
+            roleModalLabel.textContent = 'Edit Role';
+            roleFormSubmit.textContent = 'Update';
+            roleForm.action = button.dataset.editUrl;
+            roleForm.querySelector('[name="name"]').value = button.dataset.name;
+            roleForm.querySelector('[name="description"]').value = button.dataset.description || '';
+            roleForm.querySelector('[name="is_active"]').checked = button.dataset.isActive === 'true';
+            const groupValues = button.dataset.permissionGroups ? button.dataset.permissionGroups.split(',') : [];
+            const permissionValues = button.dataset.permissions ? button.dataset.permissions.split(',') : [];
+            setMultiSelect(roleForm.querySelector('[name="permission_groups"]'), groupValues);
+            setMultiSelect(roleForm.querySelector('[name="permissions"]'), permissionValues);
+        });
+    });
+
+    document.querySelectorAll('.js-delete-role').forEach((button) => {
+        button.addEventListener('click', () => {
+            deleteRoleForm.action = button.dataset.deleteUrl;
+            roleToDelete.textContent = button.dataset.roleName;
+        });
+    });
+
+    roleModal.addEventListener('hidden.bs.modal', resetForm);
+});
+</script>
+{% endblock %}

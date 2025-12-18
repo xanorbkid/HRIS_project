@@ -1,0 +1,10 @@
+/* Sidebar-specific overrides to improve readability */
+.iq-sidebar-menu .side-menu li,
+.iq-sidebar-menu .side-menu li a,
+.iq-sidebar-menu .side-menu li a span {
+    white-space: normal;
+}
+
+.iq-sidebar-menu .side-menu li a {
+    overflow: visible;
+}

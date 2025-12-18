@@ -1,0 +1,29 @@
+{% extends "components/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between">
+            <h5>{{ job.title }}</h5>
+            <a href="{% url 'job-list' %}" class="btn btn-secondary btn-sm">Back</a>
+        </div>
+
+        <div class="card-body">
+            <p><strong>Department:</strong> {{ job.department }}</p>
+            <p><strong>Employment Type:</strong> {{ job.get_employment_type_display }}</p>
+            <p><strong>Status:</strong> {{ job.status }}</p>
+            <p><strong>Posted Date:</strong> {{ job.posted_date|date:"M d, Y" }}</p>
+            <p><strong>Closing Date:</strong> {{ job.closing_date|default:"—" }}</p>
+            <p><strong>Description:</strong></p>
+            <div class="border rounded p-3 bg-light">
+                {{ job.description|linebreaks }}
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <a href="{% url 'job-edit' job.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'job-delete' job.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

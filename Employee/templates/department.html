@@ -1,125 +1,246 @@
 {% extends 'components/base.html' %}
 {% load static %}
-{% block title %} {{page_title}}{% endblock %}
+{% block title %} {{ page_title }} {% endblock %}
+
 {% block content %}
 <div class="content-page">
     <div class="container-fluid">
+
         <div class="row">
             <div class="col-lg-12">
-               
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card car card-stretch">
-                            <div class="card-body p-0">
-                                <div class="d-flex justify-content-between align-items-center p-3 pb-md-0">
-                                    <h5 class="fw-bold">Department </h5>
-                                    <button class="btn btn-secondary btn-sm">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="me-1" width="20" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                        </svg>
-                                        Export
-                                    </button>
-                                     <a href="#"
-                                    class="btn btn-primary position-relative d-flex align-items-center justify-content-between">
+
+                <div class="card car card-stretch">
+                    <div class="card-body p-0">
+
+                        <!-- Header -->
+                        <div class="d-flex justify-content-between align-items-center p-3 pb-md-0">
+                            <h5 class="fw-bold">Departments</h5>
+
+                            <div class="d-flex gap-2 align-items-center">
+                                {% if search_query %}
+                                    <span class="text-muted small">Filtered by "{{ search_query }}"</span>
+                                {% endif %}
+
+                                <!-- Add Department -->
+                                <button type="button" class="btn btn-primary d-flex align-items-center" id="addDepartmentBtn" data-bs-toggle="modal" data-bs-target="#departmentModal">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="me-2" width="20" fill="none"
                                         viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                                     </svg>
                                     Add Department
-                                </a>
-                                </div>
-                                <div class="table-responsive iq-customer-table">
-                                    <table class="table data-table mb-0">
-                                        <thead class="table-color-heading">
-                                            <tr class="">
-                                                <th scope="col" class="pe-0 w-01">
-                                                    <div class="d-flex justify-content-start align-items-end mb-1 ">
-                                                        <div class="form-check ">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                id="flexCheckDefault2">
-                                                            <label class="form-check-label" for="flexCheckDefault2">
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </th>
-                                                <th scope="col">
-                                                    Name
-                                                </th>
-                                                <th scope="col">
-                                                    Description
-                                                </th>
-                                                <!-- <th scope="col">
-                                                    Department
-                                                </th>
-                                                <th scope="col">
-                                                    Phone
-                                                </th> -->
-                                                <th scope="col" class="text-right">
-                                                    Action
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {% for item in departments %}
-                                            <tr class="white-space-no-wrap">
-                                                <td class="pe-0 ">
-                                                    <div class="form-check ">
-                                                        <input class="form-check-input" type="checkbox" value="" id="check{{ emp.id }}">
-                                                        <label class="form-check-label" for="check{{ item.id }}"></label>
-                                                    </div>
-                                                </td>
-                                                <td class="">
-                                                    <div class="active-project-1 d-flex align-items-center mt-0 ">
-                                                       
-                                                        <div class="data-content">
-                                                            <div>
-                                                                {% if item.name %}
-                                                                <span class="fw-bold">{{ item.name }}</span>
-                                                                {% else %}
-                                                                <span class="fw-bold">Employee {{ item.id }}</span>
-                                                                {% endif %}
-                                                            </div>
-                                                            <p class="m-0 text-secondary small">
-                                                                {% if item.job_title %}{{ emp.job_title.name }}{% endif %}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>{{ item.description }}</td>
-                                              
-                                                <td>
-                                                    <div class="d-flex justify-content-start align-items-center">
-                                                        <a class="" data-bs-toggle="tooltip" data-bs-placement="top" title="View" href="#">
-                                                            <i class="fas fa-eye text-secondary" style="font-size: 15px;"></i>
-                                                        </a>
-                                                        <a class="" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit" href="#">
-                                                            <i class="fas fa-edit text-secondary mx-4" style="font-size: 15px;"></i>
-                                                        </a>
-                                                        <a class="badge bg-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete" href="#">
-                                                            <i class="fas fa-trash-alt" style="font-size: 15px;"></i>
-                                                        </a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            {% empty %}
-                                            <tr>
-                                                <td colspan="6">No employees found.</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
+                                </button>
                             </div>
                         </div>
+
+                        <!-- Table -->
+                        <div class="table-responsive iq-customer-table">
+                            <table class="table data-table mb-0">
+                                <thead class="table-color-heading">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+
+                                        <th class="text-right">Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    {% for item in departments %}
+                                    <tr>
+                                        <td>
+                                            <span class="fw-bold">{{ item.name }}</span>
+                                        </td>
+
+                                        <td>{{ item.description|default:"—" }}</td>
+
+                                        <td>
+                                            <div class="d-flex align-items-center">
+
+                                                <!-- View -->
+                                                <a href="{% url 'department_view' item.id %}"
+                                                    data-bs-toggle="tooltip" title="View">
+                                                    <i class="fas fa-eye text-secondary"></i>
+                                                </a>
+
+                                                <!-- Edit -->
+                                                <button
+                                                    type="button"
+                                                    class="btn btn-link p-0 mx-3 js-edit-department"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Edit"
+                                                    data-edit-url="{% url 'department_edit' item.id %}"
+                                                    data-name="{{ item.name }}"
+                                                    data-description="{{ item.description|default:' '|escape }}"
+                                                    data-head="{{ item.head.id|default:'' }}"
+                                                >
+                                                    <i class="fas fa-edit text-secondary"></i>
+                                                </button>
+
+                                                <!-- Delete -->
+                                                <button
+                                                    type="button"
+                                                    class="badge bg-danger border-0 js-delete-department"
+                                                    data-bs-toggle="tooltip"
+                                                    title="Delete"
+                                                    data-delete-url="{% url 'department_delete' item.id %}"
+                                                    data-department-name="{{ item.name }}"
+                                                >
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="3" class="text-center py-3">
+                                            No departments found.
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% if page_obj and page_obj.paginator.num_pages > 1 %}
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center px-3 py-3 border-top">
+                            <p class="mb-2 mb-md-0 text-muted small">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                            </p>
+                            <nav aria-label="Department pagination">
+                                <ul class="pagination pagination-sm mb-0">
+                                    <li class="page-item {% if not page_obj.has_previous %}disabled{% endif %}">
+                                        <a class="page-link" href="?{% if search_query %}q={{ search_query|urlencode }}&{% endif %}page={% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% else %}1{% endif %}">Previous</a>
+                                    </li>
+                                    {% for num in page_obj.paginator.page_range %}
+                                        {% if num == page_obj.number %}
+                                            <li class="page-item active" aria-current="page">
+                                                <span class="page-link">{{ num }}</span>
+                                            </li>
+                                        {% else %}
+                                            <li class="page-item">
+                                                <a class="page-link" href="?{% if search_query %}q={{ search_query|urlencode }}&{% endif %}page={{ num }}">{{ num }}</a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <li class="page-item {% if not page_obj.has_next %}disabled{% endif %}">
+                                        <a class="page-link" href="?{% if search_query %}q={{ search_query|urlencode }}&{% endif %}page={% if page_obj.has_next %}{{ page_obj.next_page_number }}{% else %}{{ page_obj.number }}{% endif %}">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        {% endif %}
+
                     </div>
                 </div>
+
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
 
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="departmentModal" tabindex="-1" aria-labelledby="departmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="departmentForm" data-create-url="{% url 'department_add' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="departmentModalLabel">Add Department</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for field in department_form %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="departmentFormSubmit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteDepartmentModal" tabindex="-1" aria-labelledby="deleteDepartmentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="deleteDepartmentForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteDepartmentModalLabel">Delete Department</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Delete <span class="fw-bold" id="departmentToDelete"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const modal = document.getElementById('departmentModal');
+    const form = document.getElementById('departmentForm');
+    const modalLabel = document.getElementById('departmentModalLabel');
+    const submitBtn = document.getElementById('departmentFormSubmit');
+    const addBtn = document.getElementById('addDepartmentBtn');
+    const deleteForm = document.getElementById('deleteDepartmentForm');
+    const departmentToDelete = document.getElementById('departmentToDelete');
+
+    const resetForm = () => {
+        form.reset();
+        form.action = form.dataset.createUrl;
+        modalLabel.textContent = 'Add Department';
+        submitBtn.textContent = 'Save';
+    };
+
+    addBtn.addEventListener('click', resetForm);
+
+    document.querySelectorAll('.js-edit-department').forEach((button) => {
+        button.addEventListener('click', () => {
+            resetForm();
+            modalLabel.textContent = 'Edit Department';
+            submitBtn.textContent = 'Update';
+            form.action = button.dataset.editUrl;
+            form.querySelector('[name="name"]').value = button.dataset.name || '';
+            const description = button.dataset.description ? button.dataset.description.trim() : '';
+            form.querySelector('[name="description"]').value = description;
+            const headField = form.querySelector('[name="head"]');
+            if (headField) {
+                headField.value = button.dataset.head || '';
+            }
+        });
+    });
+
+    document.querySelectorAll('.js-delete-department').forEach((button) => {
+        button.addEventListener('click', () => {
+            deleteForm.action = button.dataset.deleteUrl;
+            departmentToDelete.textContent = button.dataset.departmentName;
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteDepartmentModal'));
+            deleteModal.show();
+        });
+    });
+
+    modal.addEventListener('hidden.bs.modal', resetForm);
+});
+</script>
 {% endblock %}

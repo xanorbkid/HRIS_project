@@ -1,0 +1,21 @@
+{% extends "components/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5>Delete Job Opening</h5>
+        </div>
+        <div class="card-body text-center">
+            <p>Are you sure you want to delete the job opening:</p>
+            <h5 class="mb-4"><strong>{{ job.title }}</strong></h5>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger px-4">Delete</button>
+                <a href="{% url 'job-list' %}" class="btn btn-secondary px-4">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

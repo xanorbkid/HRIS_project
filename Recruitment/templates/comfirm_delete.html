@@ -1,0 +1,23 @@
+{% extends "components/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header">
+            <h5 class="mb-0">Delete Applicant</h5>
+        </div>
+        <div class="card-body text-center">
+            <p class="mb-4">
+                Are you sure you want to delete  
+                <strong>{{ applicant.first_name }} {{ applicant.last_name }}</strong>?
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+                <button class="btn btn-danger px-4" type="submit">Delete</button>
+                <a href="{% url 'applicant-list' %}" class="btn btn-secondary px-4">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

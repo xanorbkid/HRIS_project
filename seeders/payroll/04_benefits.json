@@ -1,0 +1,68 @@
+[
+    {
+        "model": "Payroll.benefit",
+        "pk": 1,
+        "fields": {
+            "name": "Health Insurance",
+            "description": "Comprehensive health insurance coverage",
+            "taxable": false,
+            "default_value": "500.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.benefit",
+        "pk": 2,
+        "fields": {
+            "name": "Life Insurance",
+            "description": "Life insurance coverage",
+            "taxable": false,
+            "default_value": "200.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.benefit",
+        "pk": 3,
+        "fields": {
+            "name": "Retirement Plan",
+            "description": "Company contribution to retirement plan",
+            "taxable": true,
+            "default_value": "1000.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.benefit",
+        "pk": 4,
+        "fields": {
+            "name": "Gym Membership",
+            "description": "Annual gym membership reimbursement",
+            "taxable": false,
+            "default_value": "600.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.benefit",
+        "pk": 5,
+        "fields": {
+            "name": "Training & Development",
+            "description": "Budget for professional development courses",
+            "taxable": false,
+            "default_value": "1200.00",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

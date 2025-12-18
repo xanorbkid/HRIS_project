@@ -1,0 +1,90 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mb-3 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">{{ page_title }}</h4>
+                    <p class="text-muted mb-0">Full profile and organizational information.</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'employee_edit' employee.id %}">Edit</a>
+                    <a class="btn btn-outline-danger btn-sm" href="{% url 'employee_delete' employee.id %}">Delete</a>
+                    <a class="btn btn-secondary btn-sm" href="{% url 'employee_list' %}">Back to list</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">General</h5>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Name</dt>
+                            <dd class="col-sm-8">
+                                {% if employee.user %}
+                                    {{ employee.user.get_full_name|default:employee.user.username }}
+                                {% else %}
+                                    Employee {{ employee.id }}
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-4">Email</dt>
+                            <dd class="col-sm-8">
+                                {% if employee.user %}
+                                    <a href="mailto:{{ employee.user.email }}">{{ employee.user.email }}</a>
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-4">Department</dt>
+                            <dd class="col-sm-8">{{ employee.department|default:"—" }}</dd>
+
+                            <dt class="col-sm-4">Job Title</dt>
+                            <dd class="col-sm-8">{{ employee.job_title|default:"—" }}</dd>
+
+                            <dt class="col-sm-4">Manager</dt>
+                            <dd class="col-sm-8">{{ employee.manager|default:"—" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Employment</h5>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-4">Date Joined</dt>
+                            <dd class="col-sm-8">{{ employee.date_joined|date:"M d, Y"|default:"—" }}</dd>
+
+                            <dt class="col-sm-4">Employment Type</dt>
+                            <dd class="col-sm-8">{{ employee.get_employment_type_display }}</dd>
+
+                            <dt class="col-sm-4">Status</dt>
+                            <dd class="col-sm-8">{{ employee.get_status_display }}</dd>
+
+                            <dt class="col-sm-4">Salary</dt>
+                            <dd class="col-sm-8">
+                                {% if employee.salary %}
+                                    {{ employee.salary }}
+                                {% else %}
+                                    —
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

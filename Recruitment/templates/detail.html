@@ -1,0 +1,44 @@
+{% extends "components/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">{{ applicant.first_name }} {{ applicant.last_name }}</h5>
+            <a href="{% url 'applicant-list' %}" class="btn btn-sm btn-secondary">Back</a>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Email:</strong> {{ applicant.email }}</div>
+                <div class="col-md-6"><strong>Phone:</strong> {{ applicant.phone_number }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Job Opening:</strong> {{ applicant.job_opening.title }}</div>
+                <div class="col-md-6"><strong>Status:</strong> {{ applicant.status }}</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6"><strong>Experience:</strong> {{ applicant.experience_years }} years</div>
+                <div class="col-md-6"><strong>Applied At:</strong> {{ applicant.applied_at|date:"M d, Y" }}</div>
+            </div>
+
+            {% if applicant.resume %}
+                <p><strong>Resume:</strong>
+                    <a href="{{ applicant.resume.url }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                        Download Resume
+                    </a>
+                </p>
+            {% endif %}
+
+            <div class="mt-4 d-flex gap-2">
+                <a href="{% url 'applicant-edit' applicant.id %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'applicant-delete' applicant.id %}" class="btn btn-danger btn-sm">Delete</a>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

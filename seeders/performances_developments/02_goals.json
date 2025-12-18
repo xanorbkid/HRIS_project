@@ -1,0 +1,67 @@
+[
+    {
+        "model": "Performances_developments.goal",
+        "pk": 1,
+        "fields": {
+            "employee": 1,
+            "title": "Complete Project Alpha",
+            "description": "<p>Successfully deliver Project Alpha with all features and within budget.</p>",
+            "start_date": "2025-01-01",
+            "end_date": "2025-06-30",
+            "progress": "45.00",
+            "status": "IN_PROGRESS",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.goal",
+        "pk": 2,
+        "fields": {
+            "employee": 2,
+            "title": "Improve Employee Satisfaction Score",
+            "description": "<p>Achieve employee satisfaction score of 85% or higher in Q1 2025.</p>",
+            "start_date": "2025-01-01",
+            "end_date": "2025-03-31",
+            "progress": "70.00",
+            "status": "IN_PROGRESS",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.goal",
+        "pk": 3,
+        "fields": {
+            "employee": 3,
+            "title": "Complete Leadership Training",
+            "description": "<p>Complete the advanced leadership training program and obtain certification.</p>",
+            "start_date": "2025-02-01",
+            "end_date": "2025-05-31",
+            "progress": "30.00",
+            "status": "IN_PROGRESS",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.goal",
+        "pk": 4,
+        "fields": {
+            "employee": 4,
+            "title": "Launch New Feature Module",
+            "description": "<p>Design and launch the new user dashboard feature module.</p>",
+            "start_date": "2025-01-15",
+            "end_date": "2025-04-15",
+            "progress": "100.00",
+            "status": "COMPLETED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

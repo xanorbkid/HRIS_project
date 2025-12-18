@@ -1,0 +1,42 @@
+[
+    {
+        "model": "Performances_developments.reviewcycle",
+        "pk": 1,
+        "fields": {
+            "name": "Q1 2025 Performance Review",
+            "start_date": "2025-01-01",
+            "end_date": "2025-03-31",
+            "is_active": true,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.reviewcycle",
+        "pk": 2,
+        "fields": {
+            "name": "Q2 2025 Performance Review",
+            "start_date": "2025-04-01",
+            "end_date": "2025-06-30",
+            "is_active": true,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.reviewcycle",
+        "pk": 3,
+        "fields": {
+            "name": "Annual 2024 Performance Review",
+            "start_date": "2024-01-01",
+            "end_date": "2024-12-31",
+            "is_active": false,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

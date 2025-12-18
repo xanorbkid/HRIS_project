@@ -10,10 +10,10 @@ echo -e "${BLUE}Starting database seeding process...${NC}"
 
 # Activate virtual environment
 echo -e "\n${BLUE}Activating virtual environment...${NC}"
-source myenv/Scripts/activate
+source venv/bin/activate
 
 # Navigate to project directory
-cd HRIS
+cd HRIS_project 
 
 # Flush the database to start fresh
 echo -e "\n${BLUE}Flushing the database...${NC}"

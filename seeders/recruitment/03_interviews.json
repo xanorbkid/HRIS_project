@@ -1,0 +1,93 @@
+[
+    {
+        "model": "Recruitment.interview",
+        "pk": 1,
+        "fields": {
+            "applicant": 1,
+            "interviewer": 1,
+            "interview_type": "TECHNICAL",
+            "scheduled_date": "2025-01-25T14:00:00Z",
+            "duration_minutes": 90,
+            "location": "Conference Room A / Zoom",
+            "feedback": "<p>Excellent technical skills. Strong problem-solving abilities. Good communication. Recommended for next round.</p>",
+            "rating": 9,
+            "result": "PASSED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.interview",
+        "pk": 2,
+        "fields": {
+            "applicant": 1,
+            "interviewer": 1,
+            "interview_type": "FINAL",
+            "scheduled_date": "2025-02-01T10:00:00Z",
+            "duration_minutes": 60,
+            "location": "Main Office / Zoom",
+            "feedback": "<p>Final interview completed. Candidate is a great cultural fit. Ready to make offer.</p>",
+            "rating": 9,
+            "result": "PASSED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.interview",
+        "pk": 3,
+        "fields": {
+            "applicant": 2,
+            "interviewer": 1,
+            "interview_type": "PHONE",
+            "scheduled_date": "2025-01-28T15:30:00Z",
+            "duration_minutes": 30,
+            "location": "Phone Call",
+            "feedback": "<p>Initial phone screening completed. Candidate seems qualified. Schedule technical interview.</p>",
+            "rating": 7,
+            "result": "PASSED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.interview",
+        "pk": 4,
+        "fields": {
+            "applicant": 3,
+            "interviewer": 2,
+            "interview_type": "HR",
+            "scheduled_date": "2025-02-10T11:00:00Z",
+            "duration_minutes": 45,
+            "location": "HR Office",
+            "feedback": "<p>Great candidate for HR Business Partner role. Strong interpersonal skills and HR knowledge.</p>",
+            "rating": 8,
+            "result": "PASSED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.interview",
+        "pk": 5,
+        "fields": {
+            "applicant": 5,
+            "interviewer": 1,
+            "interview_type": "TECHNICAL",
+            "scheduled_date": "2025-02-20T14:00:00Z",
+            "duration_minutes": 60,
+            "location": "Conference Room B",
+            "feedback": "",
+            "rating": null,
+            "result": "PENDING",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

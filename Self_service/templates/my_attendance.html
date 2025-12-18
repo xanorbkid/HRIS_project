@@ -1,0 +1,95 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}My Attendance{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">My Attendance</h4>
+                    <p class="text-muted mb-0">Personal attendance history synced from the time-tracking module.</p>
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <button class="btn btn-outline-secondary" data-bs-toggle="collapse" data-bs-target="#attendanceFilters">
+                        Filters
+                    </button>
+                    <a class="btn btn-primary" href="#">Download CSV</a>
+                </div>
+            </div>
+        </div>
+
+        {% if error %}
+            <div class="alert alert-warning">
+                {{ error }}
+            </div>
+        {% else %}
+            <div class="collapse mb-3" id="attendanceFilters">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <label class="form-label">From</label>
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">To</label>
+                                <input type="date" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">Status</label>
+                                <select class="form-select">
+                                    <option value="">All</option>
+                                    <option>Present</option>
+                                    <option>Absent</option>
+                                    <option>On Leave</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body table-responsive">
+                    <table class="table align-middle table-striped mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Shift</th>
+                                <th>Check-in</th>
+                                <th>Check-out</th>
+                                <th>Worked Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if attendance %}
+                                {% for record in attendance %}
+                                    <tr>
+                                        <td>{{ record.date|date:"M d, Y" }}</td>
+                                        <td><span class="badge bg-light text-dark">{{ record.get_status_display|default:record.status }}</span></td>
+                                        <td>{{ record.shift|default:"—" }}</td>
+                                        <td>{{ record.check_in|default:"—" }}</td>
+                                        <td>{{ record.check_out|default:"—" }}</td>
+                                        <td>{{ record.worked_hours|default:"0" }}h</td>
+                                    </tr>
+                                {% endfor %}
+                            {% else %}
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">
+                                        No attendance entries found for the selected period.
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

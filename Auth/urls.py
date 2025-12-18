@@ -1,9 +1,11 @@
 from django.urls import path
-from .views import *
-
+from . import views
 
 
 urlpatterns = [
-    # List / index of employees
-   path('login/', login_view, name='login'),
+    path("signup/", views.signup_view, name="signup"),
+    path("login/", views.login_view, name="login"),
+    path("logout/", views.logout_view, name="logout"),
+    path('', views.dashboard, name='dashboard')
 ]
+                # raise forms.ValidationError("Due date cannot be in the past.")

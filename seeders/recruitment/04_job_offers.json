@@ -1,0 +1,20 @@
+[
+    {
+        "model": "Recruitment.joboffer",
+        "pk": 1,
+        "fields": {
+            "applicant": 3,
+            "offered_position": 2,
+            "salary_offered": "70000.00",
+            "start_date": "2025-03-01",
+            "offer_date": "2025-02-15",
+            "status": "PENDING",
+            "offer_letter": "",
+            "remarks": "<p>Offer extended for HR Business Partner position. Waiting for candidate response.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

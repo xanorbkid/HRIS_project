@@ -1,0 +1,58 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-3">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">{{ jobtitle.name }}</h4>
+                    <p class="text-muted mb-0">Job level: {{ jobtitle.level|default:"—" }}</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'jobtitle_edit' jobtitle.id %}">Edit</a>
+                    <a class="btn btn-secondary btn-sm" href="{% url 'jobtitle_list' %}">Back to list</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Description</h5>
+                        {% if jobtitle.description %}
+                            <div class="text-muted">{{ jobtitle.description|safe }}</div>
+                        {% else %}
+                            <p class="text-muted mb-0">No description provided.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Assigned Employees</h5>
+                        {% if jobtitle.employeeprofile_set.all %}
+                            <ul class="list-unstyled mb-0">
+                                {% for employee in jobtitle.employeeprofile_set.all %}
+                                    <li class="mb-2">
+                                        <strong>{{ employee }}</strong>
+                                        <span class="text-muted">({{ employee.department|default:"No department" }})</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="text-muted mb-0">No employees currently hold this title.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

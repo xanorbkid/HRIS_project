@@ -1,0 +1,129 @@
+{% extends "base_auth.html" %}
+{% load static %}
+
+{% block title %}Logout - HRIS{% endblock %}
+
+{% block content %}
+<div class="page-header min-vh-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-5 col-lg-6 col-md-8 col-sm-10">
+                <div class="card card-plain mt-8 shadow-lg border-0">
+                    <div class="card-header pb-0 text-center bg-transparent">
+                        <div class="mb-4">
+                            <div class="icon-lg bg-gradient-danger rounded-circle mx-auto d-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                                <i class="fas fa-sign-out-alt text-white" style="font-size: 2rem;"></i>
+                            </div>
+                            <h3 class="font-weight-black text-dark display-6 mb-2">Confirm Logout</h3>
+                            <p class="text-muted mb-0">Are you sure you want to log out?</p>
+                        </div>
+                    </div>
+                    <div class="card-body px-lg-5 pt-0">
+                        <div class="text-center mb-4">
+                            <div class="d-flex align-items-center justify-content-center mb-3">
+                                {% if user.profile_image %}
+                                    <img src="{{ user.profile_image.url }}" 
+                                         alt="Profile" 
+                                         class="rounded-circle border border-3 border-primary" 
+                                         style="width: 80px; height: 80px; object-fit: cover;">
+                                {% else %}
+                                    <div class="rounded-circle bg-gradient-primary text-white d-flex align-items-center justify-content-center border border-3 border-primary" 
+                                         style="width: 80px; height: 80px; font-size: 2rem; font-weight: bold;">
+                                        {% if user.get_full_name %}
+                                            {{ user.get_full_name|first|upper }}
+                                        {% else %}
+                                            {{ user.username|first|upper }}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <h5 class="mb-1">
+                                {% if user.get_full_name %}
+                                    {{ user.get_full_name }}
+                                {% else %}
+                                    {{ user.username }}
+                                {% endif %}
+                            </h5>
+                            <p class="text-muted small mb-0">{{ user.email }}</p>
+                        </div>
+
+                        <form method="POST" class="mt-4">
+                            {% csrf_token %}
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-danger btn-lg">
+                                    <i class="fas fa-sign-out-alt me-2"></i>Yes, Log Me Out
+                                </button>
+                                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-lg">
+                                    <i class="fas fa-times me-2"></i>Cancel
+                                </a>
+                            </div>
+                        </form>
+
+                        <div class="mt-4 pt-3 border-top text-center">
+                            <small class="text-muted">
+                                <i class="fas fa-shield-alt me-1"></i>
+                                Your session will be securely terminated
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Additional Info Card -->
+                <div class="card card-plain mt-4 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <p class="text-muted small mb-0">
+                            <i class="fas fa-info-circle me-1"></i>
+                            You can log back in anytime using your credentials
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.icon-lg {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    box-shadow: 0 8px 20px rgba(245, 87, 108, 0.3);
+}
+
+.card {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.btn-lg {
+    padding: 12px 24px;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-danger:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(220, 53, 69, 0.4);
+}
+
+.btn-outline-secondary:hover {
+    transform: translateY(-2px);
+}
+
+.page-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.page-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+</style>
+{% endblock %}
+

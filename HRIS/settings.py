@@ -56,6 +56,14 @@ INSTALLED_APPS = [
     'tinymce',
     'Employee',
     'Time_off_management',
+    'Recruitment',
+    'Payroll',
+    'Performances_developments',
+    'Documents',
+    'Self_service',
+    'Support_others',
+    'Settings'
+    
 ]
 
 
@@ -77,13 +85,14 @@ ROOT_URLCONF = 'HRIS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Support_others.context_processors.navbar_notifications',
             ],
         },
     },
@@ -145,7 +154,14 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+# Authentication Redirects
+LOGIN_REDIRECT_URL = '/'  # After successful login, redirect here
+LOGOUT_REDIRECT_URL = '/auth/login/'  # After logout, redirect to login page
+LOGIN_URL = '/auth/login/'  # When @login_required is used, redirect here
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

@@ -1,0 +1,371 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="fw-bold mb-1">{{ page_title }}</h2>
+                <p class="text-muted mb-0">Visual representation of your organizational structure</p>
+            </div>
+            <div>
+                <button class="btn btn-outline-primary" onclick="expandAll()">
+                    <i class="fas fa-expand me-2"></i>Expand All
+                </button>
+                <button class="btn btn-outline-secondary" onclick="collapseAll()">
+                    <i class="fas fa-compress me-2"></i>Collapse All
+                </button>
+            </div>
+        </div>
+
+        {% if departments %}
+            <div class="row">
+                <div class="col-12">
+                    <!-- Department Tabs -->
+                    <ul class="nav nav-tabs mb-4" id="deptTabs" role="tablist">
+                        {% for department, emps in departments.items %}
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link {% if forloop.first %}active{% endif %}" 
+                                    id="dept-{{ department.id }}-tab" 
+                                    data-bs-toggle="tab" 
+                                    data-bs-target="#dept-{{ department.id }}" 
+                                    type="button" 
+                                    role="tab">
+                                <i class="fas fa-building me-2"></i>{{ department.name }}
+                                <span class="badge bg-primary ms-2">{{ emps|length }}</span>
+                            </button>
+                        </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- Department Content -->
+                    <div class="tab-content" id="deptTabContent">
+                        {% for department, emps in departments.items %}
+                        <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" 
+                             id="dept-{{ department.id }}" 
+                             role="tabpanel">
+                            
+                            <!-- Department Header -->
+                            <div class="card mb-4 border-0 shadow-sm">
+                                <div class="card-body">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-8">
+                                            <h4 class="fw-bold mb-1">{{ department.name }}</h4>
+                                            {% if department.description %}
+                                                <p class="text-muted mb-0">{{ department.description|safe|truncatewords:20 }}</p>
+                                            {% endif %}
+                                        </div>
+                                        <div class="col-md-4 text-end">
+                                            {% if department.head %}
+                                                <div class="d-flex align-items-center justify-content-end">
+                                                    <div class="me-3 text-end">
+                                                        <small class="text-muted d-block">Department Head</small>
+                                                        <strong>{{ department.head.user.get_full_name|default:department.head.user.username }}</strong>
+                                                    </div>
+                                                    {% if department.head.user.profile_image %}
+                                                        <img src="{{ department.head.user.profile_image.url }}" 
+                                                             alt="Head" 
+                                                             class="rounded-circle" 
+                                                             width="50" 
+                                                             height="50"
+                                                             style="object-fit: cover;">
+                                                    {% else %}
+                                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" 
+                                                             style="width: 50px; height: 50px;">
+                                                            <i class="fas fa-user"></i>
+                                                        </div>
+                                                    {% endif %}
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Organization Tree -->
+                            <div class="org-chart-container">
+                                {% if emps %}
+                                    <div class="org-tree-wrapper">
+                                        <div class="org-tree" data-department-id="dept-{{ department.id }}">
+                                            {% include 'partials/_org_tree_modern.html' with employees=emps manager=None department=department level=0 %}
+                                        </div>
+                                    </div>
+                                {% else %}
+                                    <div class="alert alert-info text-center">
+                                        <i class="fas fa-info-circle me-2"></i>No employees in this department yet.
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle me-2"></i>No departments or employees found.
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+/* Organization Chart Styles */
+.org-chart-container {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 30px;
+    min-height: 400px;
+}
+
+.org-tree-wrapper {
+    position: relative;
+}
+
+.org-tree {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.org-tree ul {
+    padding-top: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.org-tree li {
+    float: left;
+    text-align: center;
+    list-style-type: none;
+    position: relative;
+    padding: 20px 10px 0 10px;
+}
+
+.org-branch.collapsed {
+    display: none !important;
+}
+
+.org-tree li::before,
+.org-tree li::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 50%;
+    border-top: 2px solid #dee2e6;
+    width: 50%;
+    height: 20px;
+}
+
+.org-tree li::after {
+    right: auto;
+    left: 50%;
+    border-left: 2px solid #dee2e6;
+}
+
+.org-tree li:only-child::after,
+.org-tree li:only-child::before {
+    display: none;
+}
+
+.org-tree li:only-child {
+    padding-top: 0;
+}
+
+.org-tree li:first-child::before,
+.org-tree li:last-child::after {
+    border: 0 none;
+}
+
+.org-tree li:last-child::before {
+    border-right: 2px solid #dee2e6;
+    border-radius: 0 5px 0 0;
+}
+
+.org-tree li:first-child::after {
+    border-radius: 5px 0 0 0;
+}
+
+.org-node-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    min-width: 200px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid transparent;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.org-node-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    border-color: #0d6efd;
+    text-decoration: none;
+    color: inherit;
+}
+
+.org-node-card .avatar-wrapper {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    position: relative;
+}
+
+.org-node-card .avatar-wrapper img,
+.org-node-card .avatar-wrapper .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #e9ecef;
+}
+
+.org-node-card .avatar-wrapper .avatar-placeholder {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 32px;
+    font-weight: bold;
+}
+
+.org-node-card .employee-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #212529;
+    margin-bottom: 5px;
+}
+
+.org-node-card .employee-title {
+    font-size: 13px;
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.org-node-card .employee-status {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.org-node-card .status-active {
+    background: #d4edda;
+    color: #155724;
+}
+
+.org-node-card .status-on-leave {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.org-node-card .status-terminated {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.org-tree ul ul::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    border-left: 2px solid #dee2e6;
+    width: 0;
+    height: 20px;
+}
+
+/* Manager Highlight */
+.org-node-card.manager {
+    border-color: #0d6efd;
+    background: linear-gradient(135deg, #ffffff 0%, #f0f7ff 100%);
+}
+
+.org-node-card.manager .avatar-wrapper {
+    border: 3px solid #0d6efd;
+}
+
+/* Department Head Badge */
+.dept-head-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #0d6efd;
+    color: white;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .org-tree ul {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .org-tree li::before,
+    .org-tree li::after {
+        display: none;
+    }
+    
+    .org-node-card {
+        min-width: 180px;
+    }
+}
+</style>
+
+<script>
+function expandAll() {
+    document.querySelectorAll('.org-branch').forEach(branch => {
+        branch.classList.remove('collapsed');
+    });
+}
+
+function collapseAll() {
+    document.querySelectorAll('.org-branch').forEach(branch => {
+        if (branch.dataset.level !== "0") {
+            branch.classList.add('collapsed');
+        }
+    });
+}
+
+// Initialize - show only top level by default
+document.addEventListener('DOMContentLoaded', function() {
+    collapseAll();
+    
+    // Add click handlers to expand/collapse
+    document.querySelectorAll('.org-node-card').forEach(card => {
+        card.addEventListener('click', function(e) {
+            const li = this.closest('li');
+            if (!li) return;
+            const childBranch = Array.from(li.children).find(child => child.tagName === 'UL' && child.classList.contains('org-branch'));
+            if (childBranch) {
+                e.preventDefault();
+                childBranch.classList.toggle('collapsed');
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

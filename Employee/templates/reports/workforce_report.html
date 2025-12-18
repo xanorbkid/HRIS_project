@@ -1,0 +1,198 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title|default:"Workforce Movement Report" }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4 align-items-center">
+            <div class="col-lg-8">
+                <h4 class="fw-bold mb-1">{{ page_title|default:"Workforce Movement Report" }}</h4>
+                <p class="text-muted mb-0">
+                    Detailed view of hiring activity and staffing levels for {{ selected_month_display }}.
+                    <br class="d-none d-lg-block" />
+                    Generated on {{ report_generated_at|date:"M j, Y g:i a" }}.
+                </p>
+            </div>
+            <div class="col-lg-4">
+                <div class="d-flex gap-2 justify-content-lg-end flex-wrap">
+                    <a class="btn btn-primary btn-sm" href="{% url 'dashboard_export' %}{{ selected_month_query }}">
+                        <i class="fas fa-file-export me-1"></i> Download CSV
+                    </a>
+                    <a class="btn btn-outline-secondary btn-sm" href="{% url 'dashboard' %}{{ selected_month_query }}">
+                        Back to dashboard
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-secondary mb-1">Total headcount</p>
+                        <h3 class="fw-bold mb-0">{{ total_employees|default:"0" }}</h3>
+                        <small class="text-success fw-bold">{{ headcount_delta|default:"+0.0%" }} vs last cycle</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-secondary mb-1">On leave ({{ selected_month_display }})</p>
+                        <h3 class="fw-bold mb-0">{{ on_leave_today|default:"0" }}</h3>
+                        <small class="text-muted">{{ on_leave_percentage|default:"0" }}% of workforce</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-secondary mb-1">Open positions</p>
+                        <h3 class="fw-bold mb-0">{{ open_positions|default:"0" }}</h3>
+                        <small class="text-muted">{{ critical_roles|default:"0" }} critical roles</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <p class="text-secondary mb-1">Training completion</p>
+                        <h3 class="fw-bold mb-0">{{ training_completion|default:"0%" }}</h3>
+                        <div class="progress mt-2" style="height:6px;">
+                            <div class="progress-bar bg-success" style="width: {{ training_completion|default:'0%' }};"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-lg-8">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div>
+                                <h5 class="fw-bold mb-0">Staffing trend</h5>
+                                <small class="text-muted">Rolling 6-month hires & exits</small>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-sm align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>New hires</th>
+                                        <th>Departures</th>
+                                        <th>Net change</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for item in staffing_trend %}
+                                        <tr>
+                                            <td>{{ item.label }}</td>
+                                            <td class="text-success fw-bold">{{ item.hires }}</td>
+                                            <td class="text-danger fw-bold">{{ item.exits }}</td>
+                                            <td class="fw-bold {% if item.net >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                                {{ item.net }}
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="4" class="text-muted">No trend data available.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Pending leave actions</h5>
+                        {% if pending_leaves %}
+                            <div class="list-group list-group-flush">
+                                {% for leave in pending_leaves %}
+                                    <div class="list-group-item px-0">
+                                        <div class="d-flex justify-content-between">
+                                            <strong>{{ leave.employee }}</strong>
+                                            <span class="badge bg-warning text-dark">{{ leave.leave_type }}</span>
+                                        </div>
+                                        <small class="text-muted">
+                                            {{ leave.start_date }} → {{ leave.end_date }}
+                                        </small>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="text-end mt-3">
+                                <a class="btn btn-outline-primary btn-sm" href="{% url 'leave_request_list' %}">
+                                    Open leave board
+                                </a>
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">No pending approvals.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-1">
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Recent hires ({{ recent_hires_period_label }})</h5>
+                        {% if recent_hires %}
+                            <div class="table-responsive">
+                                <table class="table table-sm align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Department</th>
+                                            <th>Start date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for hire in recent_hires %}
+                                            <tr>
+                                                <td>{{ hire.name }}</td>
+                                                <td>{{ hire.department }}</td>
+                                                <td>{{ hire.start_date }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% else %}
+                            <p class="text-muted mb-0">No new hires recorded for this period.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-3">Performance reviews due</h5>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-secondary mb-1">Reviews awaiting completion</p>
+                                <h3 class="fw-bold mb-0">{{ reviews_due|default:"0" }}</h3>
+                            </div>
+                            <div class="text-end">
+                                <small class="text-muted d-block">Next due date</small>
+                                <span class="fw-semibold">{{ reviews_deadline|default:"TBD" }}</span>
+                            </div>
+                        </div>
+                        <div class="alert alert-light border mt-3 mb-0">
+                            Use this summary to nudge managers and keep timelines on track.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

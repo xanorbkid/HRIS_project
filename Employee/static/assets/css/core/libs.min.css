@@ -3312,3 +3312,11 @@ svg.leaflet-image-layer.leaflet-interactive path {
     margin-left: -12px;
     border-right-color: #fff
 }
+
+.rotate-icon {
+    transition: transform 0.3s ease;
+}
+
+.dropdown-toggle-btn[aria-expanded="true"] .rotate-icon {
+    transform: rotate(90deg);
+}

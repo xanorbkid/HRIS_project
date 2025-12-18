@@ -1,0 +1,25 @@
+{% extends "components/base.html" %}
+{% block content %}
+<br /><br /><br />
+
+<div class="container mt-4">
+  <div class="card border-danger">
+    <div class="card-header bg-danger text-white">
+      <h4>Delete Task</h4>
+    </div>
+    <div class="card-body">
+
+      <p>Are you sure you want to delete the task:</p>
+      <p><strong>{{ task.task_name }}</strong> for {{ task.employee }}?</p>
+
+      <form method="POST">
+        {% csrf_token %}
+        <button class="btn btn-danger">Yes, Delete</button>
+        <a href="{% url 'onboarding-list' %}" class="btn btn-secondary">Cancel</a>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

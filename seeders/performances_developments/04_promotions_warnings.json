@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Performances_developments.promotion",
+        "pk": 1,
+        "fields": {
+            "employee": 4,
+            "previous_position": "Junior Developer",
+            "new_position": "Senior Developer",
+            "effective_date": "2025-01-15",
+            "remarks": "<p>Promoted due to excellent performance and completion of key projects.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.warning",
+        "pk": 1,
+        "fields": {
+            "employee": 5,
+            "issued_by": 1,
+            "warning_date": "2025-02-10",
+            "reason": "<p>Repeated late arrivals to work without prior notice. This is a verbal warning.</p>",
+            "action_taken": "<p>Employee has been counseled. Improvement expected within 30 days.</p>",
+            "severity": "MINOR",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

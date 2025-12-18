@@ -1,0 +1,48 @@
+[
+    {
+        "model": "Performances_developments.trainingprogram",
+        "pk": 1,
+        "fields": {
+            "title": "Django Advanced Development",
+            "description": "<p>Advanced Django development techniques including REST APIs, authentication, and deployment.</p>",
+            "start_date": "2025-02-01",
+            "end_date": "2025-02-28",
+            "trainer": 1,
+            "location": "Training Room A / Online",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.trainingprogram",
+        "pk": 2,
+        "fields": {
+            "title": "Leadership & Management Skills",
+            "description": "<p>Comprehensive leadership training covering team management, conflict resolution, and strategic thinking.</p>",
+            "start_date": "2025-03-01",
+            "end_date": "2025-03-15",
+            "trainer": 5,
+            "location": "Conference Center",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Performances_developments.trainingprogram",
+        "pk": 3,
+        "fields": {
+            "title": "HR Best Practices Workshop",
+            "description": "<p>Workshop on modern HR practices, employee engagement, and performance management.</p>",
+            "start_date": "2025-04-01",
+            "end_date": "2025-04-05",
+            "trainer": 2,
+            "location": "HR Training Room",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

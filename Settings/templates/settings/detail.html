@@ -1,0 +1,30 @@
+{% extends 'components/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
+                        <h4 class="mb-0">{{ title }}</h4>
+                        <a href="{{ back_url }}" class="btn btn-outline-secondary btn-sm">
+                            Back to list
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row mb-0">
+                            {% for label, value in attributes %}
+                                <dt class="col-sm-4">{{ label }}</dt>
+                                <dd class="col-sm-8">{{ value }}</dd>
+                            {% endfor %}
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

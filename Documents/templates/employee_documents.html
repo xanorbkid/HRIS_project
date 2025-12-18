@@ -1,0 +1,62 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}Employee Documents{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">Employee Documents</h4>
+                    <p class="text-muted mb-0">Central repository for employee IDs, certificates, and contracts.</p>
+                </div>
+                <a class="btn btn-primary btn-sm" href="{% url 'upload_document' %}">Upload Document</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body table-responsive">
+                <table class="table align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Employee</th>
+                            <th>Category</th>
+                            <th>Title</th>
+                            <th>Uploaded By</th>
+                            <th>Uploaded On</th>
+                            <th>Expires</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if documents %}
+                            {% for doc in documents %}
+                                <tr>
+                                    <td>{{ doc.employee }}</td>
+                                    <td>{{ doc.get_document_type_display }}</td>
+                                    <td>{{ doc.title }}</td>
+                                    <td>{{ doc.uploaded_by|default:"—" }}</td>
+                                    <td>{{ doc.uploaded_at|date:"M d, Y" }}</td>
+                                    <td>{{ doc.expiry_date|date:"M d, Y"|default:"—" }}</td>
+                                    <td>
+                                        <a href="{{ doc.file.url }}" class="btn btn-outline-primary btn-sm" target="_blank">View</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center text-muted py-4">
+                                    No documents found.
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

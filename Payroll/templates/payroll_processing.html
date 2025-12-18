@@ -1,0 +1,57 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="content-wrapper p-4">
+
+    <h3 class="fw-bold mb-4" style="color:#0A2342;">Payroll Processing</h3>
+
+    <div class="card shadow-sm p-3">
+        <div class="d-flex justify-content-between mb-3">
+            <h5>Generated Payroll Batches</h5>
+            <a href="{% url 'payroll_batch_create' %}" class="btn btn-primary btn-sm" style="background:#0A2342;">Generate New Batch</a>
+        </div>
+
+        <table class="table table-bordered table-hover">
+            <thead class="text-white" style="background:#0A2342;">
+                <tr>
+                    <th>Batch Name</th>
+                    <th>Period</th>
+                    <th>Generated On</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for batch in batches %}
+                <tr>
+                    <td>{{ batch.batch_name }}</td>
+                    <td>{{ batch.pay_period_start|date:"M d" }} - {{ batch.pay_period_end|date:"M d, Y" }}</td>
+                    <td>{{ batch.generated_on|date:"M d, Y" }}</td>
+                    <td>
+                        {% if batch.status == "DRAFT" %}
+                            <span class="badge bg-secondary">Draft</span>
+                        {% elif batch.status == "APPROVED" %}
+                            <span class="badge bg-success">Approved</span>
+                        {% else %}
+                            <span class="badge bg-primary">Paid</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'payroll_batch_detail' batch.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No payroll batches generated yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+{% endblock %}

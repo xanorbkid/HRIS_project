@@ -1,0 +1,42 @@
+[
+    {
+        "model": "Payroll.salarystructure",
+        "pk": 1,
+        "fields": {
+            "name": "Junior Employee Structure",
+            "components": [1, 2, 3, 4, 6, 7, 8],
+            "created_at": "2025-01-01T00:00:00Z",
+            "created_by": 1,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarystructure",
+        "pk": 2,
+        "fields": {
+            "name": "Senior Employee Structure",
+            "components": [1, 2, 3, 4, 5, 6, 7, 8],
+            "created_at": "2025-01-01T00:00:00Z",
+            "created_by": 1,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarystructure",
+        "pk": 3,
+        "fields": {
+            "name": "Manager Structure",
+            "components": [1, 2, 3, 4, 5, 6, 7, 8],
+            "created_at": "2025-01-01T00:00:00Z",
+            "created_by": 1,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

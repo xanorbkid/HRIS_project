@@ -1,0 +1,44 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}Account Settings{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header bg-transparent">
+                        <h5 class="mb-0">Account Settings</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label class="form-label">Theme</label>
+                                <select class="form-select" name="theme">
+                                    <option value="light" {% if settings.theme == 'light' %}selected{% endif %}>Light</option>
+                                    <option value="dark" {% if settings.theme == 'dark' %}selected{% endif %}>Dark</option>
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label class="form-label">Notification Preference</label>
+                                <select class="form-select" name="notifications">
+                                    <option value="email" {% if settings.notifications == 'email' %}selected{% endif %}>Email</option>
+                                    <option value="sms" {% if settings.notifications == 'sms' %}selected{% endif %}>SMS</option>
+                                    <option value="push" {% if settings.notifications == 'push' %}selected{% endif %}>Push Notification</option>
+                                </select>
+                            </div>
+                            <button class="btn btn-primary w-100" type="submit">Save Changes</button>
+                        </form>
+                    </div>
+                    <div class="card-footer text-muted">
+                        These preferences are stored for your current session.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

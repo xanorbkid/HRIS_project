@@ -1,0 +1,135 @@
+[
+    {
+        "model": "Recruitment.applicant",
+        "pk": 1,
+        "fields": {
+            "job_opening": 1,
+            "first_name": "Michael",
+            "last_name": "Chen",
+            "email": "michael.chen@email.com",
+            "phone": "+1-555-0101",
+            "resume": "",
+            "cover_letter": "<p>I am excited to apply for the Senior Software Developer position. With 7 years of experience in full-stack development, I believe I would be a great fit for your team.</p>",
+            "experience_years": "7.0",
+            "skills": "Python, Django, React, PostgreSQL, AWS, Docker, Kubernetes",
+            "source": "LinkedIn",
+            "status": "INTERVIEW",
+            "applied_at": "2025-01-20T10:30:00Z",
+            "notes": "<p>Strong candidate with excellent technical skills. Scheduled for technical interview.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.applicant",
+        "pk": 2,
+        "fields": {
+            "job_opening": 1,
+            "first_name": "Emily",
+            "last_name": "Rodriguez",
+            "email": "emily.r@email.com",
+            "phone": "+1-555-0102",
+            "resume": "",
+            "cover_letter": "<p>I am writing to express my interest in the Senior Software Developer role. I have 6 years of experience building scalable applications.</p>",
+            "experience_years": "6.0",
+            "skills": "Python, Django, JavaScript, React, MongoDB, Azure",
+            "source": "Company Website",
+            "status": "SCREENING",
+            "applied_at": "2025-01-22T14:15:00Z",
+            "notes": "<p>Resume looks good. Need to verify references.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.applicant",
+        "pk": 3,
+        "fields": {
+            "job_opening": 2,
+            "first_name": "David",
+            "last_name": "Thompson",
+            "email": "david.t@email.com",
+            "phone": "+1-555-0103",
+            "resume": "",
+            "cover_letter": "<p>I am interested in the HR Business Partner position. I have 4 years of experience in HR and employee relations.</p>",
+            "experience_years": "4.0",
+            "skills": "HR Management, Employee Relations, Recruitment, Training & Development, HRIS",
+            "source": "Referral",
+            "status": "OFFERED",
+            "applied_at": "2025-02-05T09:00:00Z",
+            "notes": "<p>Excellent candidate. Offer extended. Waiting for response.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.applicant",
+        "pk": 4,
+        "fields": {
+            "job_opening": 2,
+            "first_name": "Lisa",
+            "last_name": "Anderson",
+            "email": "lisa.a@email.com",
+            "phone": "+1-555-0104",
+            "resume": "",
+            "cover_letter": "<p>I would like to apply for the HR Business Partner role. I have a strong background in HR operations and talent management.</p>",
+            "experience_years": "3.5",
+            "skills": "HR Operations, Talent Acquisition, Performance Management, HR Analytics",
+            "source": "LinkedIn",
+            "status": "REJECTED",
+            "applied_at": "2025-02-08T11:20:00Z",
+            "notes": "<p>Candidate did not meet minimum experience requirements.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.applicant",
+        "pk": 5,
+        "fields": {
+            "job_opening": 3,
+            "first_name": "James",
+            "last_name": "Wilson",
+            "email": "james.w@email.com",
+            "phone": "+1-555-0105",
+            "resume": "",
+            "cover_letter": "<p>I am applying for the Financial Analyst position. I have 3 years of experience in financial analysis and reporting.</p>",
+            "experience_years": "3.0",
+            "skills": "Financial Analysis, Excel, Financial Modeling, Budgeting, SQL",
+            "source": "Company Website",
+            "status": "INTERVIEW",
+            "applied_at": "2025-02-15T13:45:00Z",
+            "notes": "<p>Good candidate. Scheduled for interview with Finance Manager.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.applicant",
+        "pk": 6,
+        "fields": {
+            "job_opening": 5,
+            "first_name": "Sarah",
+            "last_name": "Martinez",
+            "email": "sarah.m@email.com",
+            "phone": "+1-555-0106",
+            "resume": "",
+            "cover_letter": "<p>I am a recent graduate interested in the Junior Frontend Developer position. I have completed several projects using React and Vue.js.</p>",
+            "experience_years": "1.0",
+            "skills": "HTML, CSS, JavaScript, React, Vue.js, Git",
+            "source": "LinkedIn",
+            "status": "APPLIED",
+            "applied_at": "2025-03-05T10:00:00Z",
+            "notes": "<p>New applicant. Review pending.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

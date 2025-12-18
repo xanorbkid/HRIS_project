@@ -1,0 +1,83 @@
+[
+    {
+        "model": "Recruitment.onboarding",
+        "pk": 1,
+        "fields": {
+            "employee": 1,
+            "task_name": "Complete Employee Profile",
+            "description": "<p>Fill out all required information in the employee profile system.</p>",
+            "assigned_to": 2,
+            "due_date": "2025-01-20",
+            "status": "COMPLETED",
+            "completed_at": "2025-01-18T10:00:00Z",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.onboarding",
+        "pk": 2,
+        "fields": {
+            "employee": 1,
+            "task_name": "IT Equipment Setup",
+            "description": "<p>Set up laptop, email account, and access to company systems.</p>",
+            "assigned_to": 1,
+            "due_date": "2025-01-20",
+            "status": "COMPLETED",
+            "completed_at": "2025-01-19T14:30:00Z",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.onboarding",
+        "pk": 3,
+        "fields": {
+            "employee": 1,
+            "task_name": "Orientation Session",
+            "description": "<p>Attend company orientation and meet the team.</p>",
+            "assigned_to": 2,
+            "due_date": "2025-01-22",
+            "status": "COMPLETED",
+            "completed_at": "2025-01-22T09:00:00Z",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.onboarding",
+        "pk": 4,
+        "fields": {
+            "employee": 2,
+            "task_name": "Complete Employee Profile",
+            "description": "<p>Fill out all required information in the employee profile system.</p>",
+            "assigned_to": 2,
+            "due_date": "2025-02-05",
+            "status": "IN_PROGRESS",
+            "completed_at": null,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Recruitment.onboarding",
+        "pk": 5,
+        "fields": {
+            "employee": 2,
+            "task_name": "Sign Employment Contract",
+            "description": "<p>Review and sign the employment contract.</p>",
+            "assigned_to": 2,
+            "due_date": "2025-02-10",
+            "status": "PENDING",
+            "completed_at": null,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

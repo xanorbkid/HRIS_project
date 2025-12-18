@@ -1,0 +1,95 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">{{ page_title }}</h4>
+                    <p class="text-muted mb-0">Detailed snapshot of the department, its leader, and members.</p>
+                </div>
+                <div class="btn-group btn-group-sm">
+                    <a class="btn btn-outline-primary" href="{% url 'department_list' %}">Back to list</a>
+                    <a class="btn btn-outline-secondary" href="{% url 'department_edit' item.pk %}">Edit</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            <div class="col-lg-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="fw-bold mb-2">{{ item.name }}</h5>
+                        <p class="text-muted mb-3">
+                            {% if item.description %}
+                                {{ item.description|safe }}
+                            {% else %}
+                                <em>No description provided for this department.</em>
+                            {% endif %}
+                        </p>
+                        <div class="mb-2">
+                            <span class="text-secondary d-block small">Department Head</span>
+                            <p class="mb-0 fw-bold">{{ item.head|default:"—" }}</p>
+                        </div>
+                        <div>
+                            <span class="text-secondary d-block small">Total Members</span>
+                            <p class="mb-0 fw-bold">
+                                {{ item.employeeprofile_set.count }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="card h-100">
+                    <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Team Members</h5>
+                        <span class="badge bg-light text-dark">{{ item.employeeprofile_set.count }}</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Job Title</th>
+                                        <th>Status</th>
+                                        <th>Joined</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% if item.employeeprofile_set.all %}
+                                        {% for employee in item.employeeprofile_set.all %}
+                                            <tr>
+                                                <td>{{ employee }}</td>
+                                                <td>{{ employee.job_title|default:"—" }}</td>
+                                                <td>
+                                                    <span class="badge bg-light text-dark text-uppercase">
+                                                        {{ employee.status }}
+                                                    </span>
+                                                </td>
+                                                <td>{{ employee.date_joined|date:"M d, Y" }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                    {% else %}
+                                        <tr>
+                                            <td colspan="4" class="text-center text-muted py-4">
+                                                No employees assigned to this department yet.
+                                            </td>
+                                        </tr>
+                                    {% endif %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

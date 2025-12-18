@@ -1,0 +1,61 @@
+{% load static %}
+{% for emp in employees %}
+    {% if emp.manager == manager %}
+        <ul class="org-branch" data-level="{{ level }}">
+            <li>
+                <a href="{% url 'employee_detail' emp.id %}" class="org-node-card {% if emp == department.head %}manager{% endif %}">
+                    <div class="avatar-wrapper">
+                        {% if emp.user.profile_image %}
+                            <img src="{{ emp.user.profile_image.url }}" alt="{{ emp.user.get_full_name }}">
+                        {% else %}
+                            <div class="avatar-placeholder">
+                                {% if emp.user.get_full_name %}
+                                    {{ emp.user.get_full_name|first|upper }}
+                                {% elif emp.user.username %}
+                                    {{ emp.user.username|first|upper }}
+                                {% else %}
+                                    E
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        {% if emp == department.head %}
+                            <span class="dept-head-badge" title="Department Head">
+                                <i class="fas fa-crown"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="employee-name">
+                        {% if emp.user.get_full_name %}
+                            {{ emp.user.get_full_name }}
+                        {% elif emp.user.username %}
+                            {{ emp.user.username }}
+                        {% else %}
+                            Employee {{ emp.id }}
+                        {% endif %}
+                    </div>
+                    
+                    {% if emp.job_title %}
+                        <div class="employee-title">{{ emp.job_title.name }}</div>
+                    {% else %}
+                        <div class="employee-title text-muted">No Title</div>
+                    {% endif %}
+                    
+                    <div>
+                        {% if emp.status == "active" %}
+                            <span class="employee-status status-active">Active</span>
+                        {% elif emp.status == "on_leave" %}
+                            <span class="employee-status status-on-leave">On Leave</span>
+                        {% elif emp.status == "terminated" %}
+                            <span class="employee-status status-terminated">Terminated</span>
+                        {% endif %}
+                    </div>
+                </a>
+
+                {% with next_level=level|add:"1" %}
+                    {% include 'partials/_org_tree_modern.html' with employees=employees manager=emp department=department level=next_level %}
+                {% endwith %}
+            </li>
+        </ul>
+    {% endif %}
+{% endfor %}

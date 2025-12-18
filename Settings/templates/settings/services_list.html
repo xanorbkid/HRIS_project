@@ -1,0 +1,191 @@
+{% extends 'components/base.html' %}
+{% load static %}
+
+{% block title %}Services{% endblock %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center flex-wrap">
+                <div>
+                    <h4 class="fw-bold mb-1">Services</h4>
+                    <p class="text-muted mb-0">All services with levels and parent-child relationships.</p>
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    {% if available_levels %}
+                        <form method="get" class="d-flex align-items-center gap-2">
+                            <label for="levelFilter" class="text-muted small mb-0">Level</label>
+                            <select id="levelFilter" name="level" class="form-select form-select-sm" onchange="this.form.submit()">
+                                <option value="">All Levels</option>
+                                {% for level in available_levels %}
+                                    <option value="{{ level }}" {% if selected_level|default:'' == level|stringformat:"s" %}selected{% endif %}>
+                                        Level {{ level }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </form>
+                    {% endif %}
+                    <button id="addServiceBtn" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#serviceModal">
+                        Add Service
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            {% if services %}
+                {% for service in services %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="fw-bold mb-2">{{ service.name }}</h5>
+                                <p class="text-muted mb-1">Type: {{ service.type_of_service }}</p>
+                                <p class="text-muted mb-1">Level: {{ service.level }}</p>
+                                <p class="text-muted mb-1">
+                                    Parent: {{ service.parent_service|default:"—" }}
+                                </p>
+                                <div class="d-flex gap-2 flex-wrap mt-auto">
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-primary btn-sm js-edit-service"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#serviceModal"
+                                        data-edit-url="{% url 'edit_service' service.id %}"
+                                        data-name="{{ service.name }}"
+                                        data-type="{{ service.type_of_service.id }}"
+                                        data-level="{{ service.level }}"
+                                        data-parent="{{ service.parent_service.id|default:'' }}"
+                                    >
+                                        Edit
+                                    </button>
+                                    <button
+                                        type="button"
+                                        class="btn btn-outline-danger btn-sm js-delete-service"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#deleteServiceModal"
+                                        data-delete-url="{% url 'delete_service' service.id %}"
+                                        data-service-name="{{ service.name }}"
+                                    >
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center text-muted">
+                            No services have been added yet.
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Create / Edit Modal -->
+<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="serviceForm" data-create-url="{% url 'create_service' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="serviceModalLabel">Add Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for field in service_form %}
+                        <div class="mb-3">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="serviceFormSubmit">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteServiceModal" tabindex="-1" aria-labelledby="deleteServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="post" id="deleteServiceForm">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteServiceModalLabel">Delete Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0">Are you sure you want to delete <span class="fw-bold" id="serviceToDelete"></span>?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const serviceModal = document.getElementById('serviceModal');
+    const serviceForm = document.getElementById('serviceForm');
+    const serviceModalLabel = document.getElementById('serviceModalLabel');
+    const serviceFormSubmit = document.getElementById('serviceFormSubmit');
+    const deleteServiceModal = document.getElementById('deleteServiceModal');
+    const deleteServiceForm = document.getElementById('deleteServiceForm');
+    const serviceToDelete = document.getElementById('serviceToDelete');
+    const addBtn = document.getElementById('addServiceBtn');
+
+    const resetServiceForm = () => {
+        serviceForm.reset();
+        serviceForm.action = serviceForm.dataset.createUrl;
+        serviceModalLabel.textContent = 'Add Service';
+        serviceFormSubmit.textContent = 'Save';
+    };
+
+    if (addBtn) {
+        addBtn.addEventListener('click', resetServiceForm);
+    }
+
+    document.querySelectorAll('.js-edit-service').forEach((button) => {
+        button.addEventListener('click', () => {
+            resetServiceForm();
+            serviceModalLabel.textContent = 'Edit Service';
+            serviceFormSubmit.textContent = 'Update';
+            serviceForm.action = button.dataset.editUrl;
+            serviceForm.querySelector('[name="name"]').value = button.dataset.name;
+            serviceForm.querySelector('[name="type_of_service"]').value = button.dataset.type;
+            serviceForm.querySelector('[name="level"]').value = button.dataset.level;
+            const parentField = serviceForm.querySelector('[name="parent_service"]');
+            parentField.value = button.dataset.parent;
+        });
+    });
+
+    document.querySelectorAll('.js-delete-service').forEach((button) => {
+        button.addEventListener('click', () => {
+            deleteServiceForm.action = button.dataset.deleteUrl;
+            serviceToDelete.textContent = button.dataset.serviceName;
+        });
+    });
+
+    serviceModal.addEventListener('hidden.bs.modal', resetServiceForm);
+});
+</script>
+{% endblock %}

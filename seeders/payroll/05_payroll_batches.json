@@ -1,0 +1,63 @@
+[
+    {
+        "model": "Payroll.payrollbatch",
+        "pk": 1,
+        "fields": {
+            "batch_name": "January 2025 Payroll",
+            "pay_period_start": "2025-01-01",
+            "pay_period_end": "2025-01-31",
+            "generated_on": "2025-01-25T10:00:00Z",
+            "processed_by": 1,
+            "status": "APPROVED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.payrollbatch",
+        "pk": 2,
+        "fields": {
+            "batch_name": "February 2025 Payroll",
+            "pay_period_start": "2025-02-01",
+            "pay_period_end": "2025-02-28",
+            "generated_on": "2025-02-25T10:00:00Z",
+            "processed_by": 1,
+            "status": "APPROVED",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.payrollbatch",
+        "pk": 3,
+        "fields": {
+            "batch_name": "March 2025 Payroll",
+            "pay_period_start": "2025-03-01",
+            "pay_period_end": "2025-03-31",
+            "generated_on": "2025-03-25T10:00:00Z",
+            "processed_by": 1,
+            "status": "PAID",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.payrollbatch",
+        "pk": 4,
+        "fields": {
+            "batch_name": "April 2025 Payroll",
+            "pay_period_start": "2025-04-01",
+            "pay_period_end": "2025-04-30",
+            "generated_on": "2025-04-25T10:00:00Z",
+            "processed_by": 1,
+            "status": "DRAFT",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

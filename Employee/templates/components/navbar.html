@@ -1,222 +1,137 @@
+{% load static %}
+
 <div class="iq-navbar-custom">
     <nav class="navbar navbar-expand-lg navbar-light p-0">
         <div class="side-menu-bt-sidebar">
             <svg xmlns="http://www.w3.org/2000/svg" class="text-secondary wrapper-menu" width="30" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
         </div>
+
         <div class="d-flex align-items-center">
+
+            <!-- Dark mode toggle -->
             <div class="change-mode">
                 <div class="custom-control custom-switch custom-switch-icon custom-control-inline">
                     <div class="custom-switch-inner">
-                        <p class="mb-0"> </p>
                         <div class="form-check form-switch">
                             <input class="form-check-input custom-control-input" type="checkbox" id="dark-mode">
                             <label class="form-check-label custom-control-label" for="dark-mode">
                                 <span class="switch-icon-right">
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="h-moon" height="20" width="20"
-                                        class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                                     </svg>
                                 </span>
                                 <span class="switch-icon-left">
-                                    <svg xmlns="http://www.w3.org/2000/svg" id="h-sun" height="20" width="20"
-                                        class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"
+                                         class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
                                     </svg>
                                 </span>
+                            </label>
                         </div>
-
-                        </label>
                     </div>
                 </div>
             </div>
+
+            <!-- Navbar toggler -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-label="Toggle navigation">
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent">
                 <svg xmlns="http://www.w3.org/2000/svg" class="text-secondary" width="30" fill="none"
-                    viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                     viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M4 6h16M4 12h16m-7 6h7"/>
                 </svg>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto navbar-list align-items-center">
-                    <li class="nav-item nav-icon dropdown">
-                        <a href="#" class="search-toggle dropdown-toggle" id="notification-dropdown"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                class="h-6 w-6 text-secondary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                            </svg>
-                            <span class="bg-primary"></span>
-                        </a>
-                        <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="notification-dropdown">
-                            <div class="card shadow-none m-0 border-0">
-                                <div class="p-3 card-header-border border-bottom">
-                                    <h6 class="text-center">
-                                        Notifications
-                                    </h6>
-                                </div>
-                                <div class="card-body overflow-auto card-header-border p-0 card-body-list"
-                                    style="max-height: 500px;">
-                                    <ul class="dropdown-menu-1 overflow-auto list-style-1 mb-0">
-                                        <li class="dropdown-item-1 float-none p-3 border-bottom">
-                                            <div class="list-item d-flex justify-content-start align-items-start">
-                                                <div class="avatar">
-                                                    <div class="avatar-img bg-danger avatar-20 d-flex justify-content-center align-items-center">
-                                                        <!-- Replaced Cart Icon -->
-                                                        <i class="fa-solid fa-cart-shopping text-white"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="list-style-detail ms-2 me-2">
-                                                    <h6 class="fw-bold">Your order is placed</h6>
-                                                    <p class="m-0">
-                                                        <small class="text-secondary">If several languages coalesce</small>
-                                                    </p>
-                                                    <p class="m-0 pt-1">
-                                                        <small class="text-secondary d-flex">
-                                                            <!-- Replaced Clock Icon -->
-                                                            <i class="fa-regular fa-clock me-2"></i>
-                                                            3 hours ago
-                                                        </small>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
 
+                    <!-- Notifications -->
+                    <li class="nav-item nav-icon dropdown position-relative">
+                        <a href="#" class="search-toggle dropdown-toggle position-relative" id="notification-dropdown"
+                           data-bs-toggle="dropdown">
+                            <i class="fa-regular fa-bell text-secondary fs-4"></i>
+                            {% if navbar_unread_notifications %}
+                                <span class="badge bg-danger text-white rounded-pill position-absolute top-0 start-100 translate-middle">
+                                    {{ navbar_unread_notifications }}
+                                </span>
+                            {% endif %}
+                        </a>
+
+                        <div class="iq-sub-dropdown dropdown-menu">
+                            <div class="card shadow-none m-0 border-0">
+                                <div class="p-3 border-bottom">
+                                    <h6 class="text-center">Notifications</h6>
                                 </div>
-                                <div class="card-footer text-muted p-3">
-                                    <p class="mb-0 text-primary text-center font-weight-bold">Show
-                                        all notifications
-                                    </p>
+
+                                <div class="card-body p-0" style="max-height: 300px; overflow-y: auto;">
+                                    {% for notif in navbar_notifications %}
+                                        <div class="dropdown-item-1 p-3 border-bottom">
+                                            <strong>{{ notif.title }}</strong><br>
+                                            <small class="text-muted d-block">{{ notif.message|safe }}</small>
+                                            <small class="text-muted">{{ notif.created_at|timesince }} ago</small>
+                                        </div>
+                                    {% empty %}
+                                        <p class="text-center text-muted py-3">No notifications</p>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="card-footer text-center">
+                                    <a href="{% url 'support:notifications' %}" class="text-primary fw-bold">View All</a>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <!-- <li class="nav-item nav-icon dropdown">
-                        <a href="#" class="search-toggle dropdown-toggle" id="dropdownMenuButton2"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="/static/assets/images/Flag/flag001.png" class="img-fluid rounded-circle"
-                                alt="user" style="height: 30px; min-width: 30px; width: 30px;">
-                            <span class="bg-primary"></span>
-                        </a>
-                        <div class="iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                            <div class="card shadow-none m-0 border-0">
-                                <div class=" p-0 ">
-                                    <ul class="dropdown-menu-1 list-group list-group-flush">
-                                        <li class="dropdown-item-1 list-group-item  px-2"><a class="p-0" href="#"><img
-                                                    src="/static/assets/images/Flag/flag-03.png" alt="img-flaf"
-                                                    class="img-fluid me-2"
-                                                    style="width: 15px;height: 15px;min-width: 15px;" />Spanish</a>
-                                        </li>
-                                        <li class="dropdown-item-1 list-group-item  px-2"><a class="p-0" href="#"><img
-                                                    src="/static/assets/images/Flag/flag-04.png" alt="img-flaf"
-                                                    class="img-fluid me-2"
-                                                    style="width: 15px;height: 15px;min-width: 15px;" />Italian</a>
-                                        </li>
-                                        <li class="dropdown-item-1 list-group-item  px-2"><a class="p-0" href="#"><img
-                                                    src="/static/assets/images/Flag/flag-02.png" alt="img-flaf"
-                                                    class="img-fluid me-2"
-                                                    style="width: 15px;height: 15px;min-width: 15px;" />French</a>
-                                        </li>
-                                        <li class="dropdown-item-1 list-group-item  px-2"><a class="p-0" href="#"><img
-                                                    src="/static/assets/images/Flag/flag-05.png" alt="img-flaf"
-                                                    class="img-fluid me-2"
-                                                    style="width: 15px;height: 15px;min-width: 15px;" />German</a>
-                                        </li>
-                                        <li class="dropdown-item-1 list-group-item  px-2"><a class="p-0" href="#"><img
-                                                    src="/static/assets/images/Flag/flag-06.png" alt="img-flaf"
-                                                    class="img-fluid me-2"
-                                                    style="width: 15px;height: 15px;min-width: 15px;" />Japanese</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </li> -->
+
+                    <!-- Search -->
                     <li class="nav-item nav-icon search-content">
-                        <a href="#" class="search-toggle rounded" id="dropdownSearch" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <svg class="svg-icon text-secondary" id="h-suns" height="25" width="25"
-                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                            </svg>
+                        <a href="#" class="search-toggle" data-bs-toggle="dropdown">
+                            <i class="fa-solid fa-magnifying-glass text-secondary fs-4"></i>
                         </a>
-                        <div class="iq-search-bar iq-sub-dropdown dropdown-menu" aria-labelledby="dropdownSearch">
-                            <form action="#" class="searchbox p-2">
-                                <div class="form-group mb-0 position-relative">
-                                    <input type="text" class="text search-input font-size-12"
-                                        placeholder="type here to search...">
-                                    <a href="#" class="search-link">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class width="20" fill="none"
-                                            viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                        </svg>
-                                    </a>
-                                </div>
+
+                        <div class="iq-search-bar iq-sub-dropdown dropdown-menu">
+                            <form class="p-2" method="get" action="">
+                                <input type="text"
+                                       class="form-control"
+                                       name="q"
+                                       value="{{ request.GET.q }}"
+                                       placeholder="Search by employee, department, job title, or document">
                             </form>
                         </div>
                     </li>
+
+                    <!-- User Account -->
                     <li class="nav-item nav-icon dropdown">
-                        <a href="#" class="nav-item nav-icon dropdown-toggle pe-0 search-toggle" id="dropdownMenuButton"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="/static/assets/images/user/1.jpg" class="img-fluid avatar-rounded" alt="user">
-                            <span class="mb-0 ms-2 user-name">John
-                                Doe</span>
+                        <a href="#" class="dropdown-toggle pe-0" id="userMenu" data-bs-toggle="dropdown">
+                            <img src="{% static 'assets/images/user/default.png' %}" 
+                                 class="img-fluid avatar-rounded" alt="user">
+                            <span class="ms-2 user-name">{{ request.user.username }}</span>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-                            <li class="dropdown-item d-flex svg-icon">
-                                <svg class="svg-icon me-0 text-secondary" id="h-01-p" width="20"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                <a href="#">My
-                                    Profile</a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li class="dropdown-item d-flex align-items-center">
+                                <i class="fa-regular fa-user me-2"></i>
+                                <a href="{% url 'my_profile' %}">My Profile</a>
                             </li>
-                            
-                            <li class="dropdown-item d-flex svg-icon">
-                                <svg class="svg-icon me-0 text-secondary" id="h-03-p" width="20"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg>
-                                <a href="#">Account
-                                    Settings</a>
+
+                            <li class="dropdown-item d-flex align-items-center">
+                                <i class="fa-solid fa-gear me-2"></i>
+                                <a href="{% url 'account_settings' %}">Account Settings</a>
                             </li>
-                            <li class="dropdown-item d-flex svg-icon">
-                                <svg class="svg-icon me-0 text-secondary" id="h-04-p" width="20"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                                </svg>
-                                <a href="#">Privacy
-                                    Settings</a>
-                            </li>
-                            <li class="dropdown-item  d-flex svg-icon border-top">
-                                <svg class="svg-icon me-0 text-secondary" id="h-05-p" width="20"
-                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                                </svg>
-                                <a href="#">Logout</a>
+
+                            <li class="dropdown-item border-top d-flex align-items-center">
+                                <i class="fa-solid fa-right-from-bracket me-2"></i>
+                                <a href="{% url 'logout' %}">Logout</a>
                             </li>
                         </ul>
                     </li>
+
                 </ul>
             </div>
         </div>

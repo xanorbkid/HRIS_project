@@ -1,0 +1,115 @@
+[
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 1,
+        "fields": {
+            "name": "Basic Salary",
+            "type": "EARNING",
+            "description": "Base monthly salary",
+            "amount": "5000.00",
+            "is_taxable": true,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 2,
+        "fields": {
+            "name": "Housing Allowance",
+            "type": "EARNING",
+            "description": "Monthly housing allowance",
+            "amount": "1500.00",
+            "is_taxable": true,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 3,
+        "fields": {
+            "name": "Transport Allowance",
+            "type": "EARNING",
+            "description": "Monthly transport allowance",
+            "amount": "500.00",
+            "is_taxable": true,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 4,
+        "fields": {
+            "name": "Medical Allowance",
+            "type": "EARNING",
+            "description": "Monthly medical allowance",
+            "amount": "300.00",
+            "is_taxable": false,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 5,
+        "fields": {
+            "name": "Performance Bonus",
+            "type": "EARNING",
+            "description": "Quarterly performance bonus",
+            "amount": "2000.00",
+            "is_taxable": true,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 6,
+        "fields": {
+            "name": "Income Tax",
+            "type": "DEDUCTION",
+            "description": "Monthly income tax deduction",
+            "amount": "750.00",
+            "is_taxable": false,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 7,
+        "fields": {
+            "name": "Social Security",
+            "type": "DEDUCTION",
+            "description": "Social security contribution",
+            "amount": "200.00",
+            "is_taxable": false,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.salarycomponent",
+        "pk": 8,
+        "fields": {
+            "name": "Health Insurance",
+            "type": "DEDUCTION",
+            "description": "Monthly health insurance premium",
+            "amount": "150.00",
+            "is_taxable": false,
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

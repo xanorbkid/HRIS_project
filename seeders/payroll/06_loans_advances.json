@@ -1,0 +1,103 @@
+[
+    {
+        "model": "Payroll.loanadvancerequest",
+        "pk": 1,
+        "fields": {
+            "employee": 1,
+            "request_type": "LOAN",
+            "amount_requested": "5000.00",
+            "reason": "<p>Emergency medical expenses for family member</p>",
+            "request_date": "2025-01-15",
+            "approved_by": 1,
+            "approval_status": "APPROVED",
+            "approved_amount": "5000.00",
+            "repayment_months": 10,
+            "start_repayment_date": "2025-02-01",
+            "remarks": "<p>Approved for full amount. Repayment to start next month.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.loanadvancerequest",
+        "pk": 2,
+        "fields": {
+            "employee": 2,
+            "request_type": "ADVANCE",
+            "amount_requested": "2000.00",
+            "reason": "<p>Advance salary for upcoming vacation</p>",
+            "request_date": "2025-02-10",
+            "approved_by": 1,
+            "approval_status": "APPROVED",
+            "approved_amount": "2000.00",
+            "repayment_months": 2,
+            "start_repayment_date": "2025-03-01",
+            "remarks": "<p>Advance approved. Will be deducted over 2 months.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.loanadvancerequest",
+        "pk": 3,
+        "fields": {
+            "employee": 3,
+            "request_type": "LOAN",
+            "amount_requested": "10000.00",
+            "reason": "<p>Home renovation loan</p>",
+            "request_date": "2025-03-05",
+            "approved_by": null,
+            "approval_status": "PENDING",
+            "approved_amount": null,
+            "repayment_months": null,
+            "start_repayment_date": null,
+            "remarks": "",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.loanadvancerequest",
+        "pk": 4,
+        "fields": {
+            "employee": 4,
+            "request_type": "ADVANCE",
+            "amount_requested": "1500.00",
+            "reason": "<p>Emergency car repair</p>",
+            "request_date": "2025-03-20",
+            "approved_by": 1,
+            "approval_status": "APPROVED",
+            "approved_amount": "1500.00",
+            "repayment_months": 3,
+            "start_repayment_date": "2025-04-01",
+            "remarks": "<p>Approved for emergency repair.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    },
+    {
+        "model": "Payroll.loanadvancerequest",
+        "pk": 5,
+        "fields": {
+            "employee": 5,
+            "request_type": "LOAN",
+            "amount_requested": "8000.00",
+            "reason": "<p>Education loan for child</p>",
+            "request_date": "2025-02-28",
+            "approved_by": 1,
+            "approval_status": "REJECTED",
+            "approved_amount": null,
+            "repayment_months": null,
+            "start_repayment_date": null,
+            "remarks": "<p>Rejected due to insufficient repayment capacity.</p>",
+            "is_deleted": false,
+            "deleted_at": null,
+            "deleted_by": null
+        }
+    }
+]
+

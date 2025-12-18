@@ -5,271 +5,420 @@
 
         <!-- Dashboard -->
         <li class="sidebar-layout">
-            <a href="{% url 'home' %}" class="svg-icon">
+            <a href="{% url 'dashboard' %}" class="svg-icon">
                 <i class="fa fa-tachometer-alt"></i>
-                <span class="ms-2">Dashboard</span>
+                <span class="ms-2 text-break">Dashboard</span>
             </a>
         </li>
 
         <!-- EMPLOYEE MANAGEMENT -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Employee Management</span>
-        </li>
+       <!-- Parent Dropdown -->
+<li class="sidebar-layout">
+    <a href="#employeeDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Employee Management</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
 
+    <!-- Submenu -->
+    <ul id="employeeDropdown" class="collapse list-unstyled ms-4 mt-2">
         <li class="sidebar-layout">
             <a href="{% url 'employee_list' %}" class="svg-icon">
                 <i class="fa fa-users"></i>
-                <span class="ms-2">Employees</span>
+                <span class="ms-2 text-break">Employees</span>
             </a>
         </li>
 
         <li class="sidebar-layout">
             <a href="{% url 'department_list' %}" class="svg-icon">
                 <i class="fa fa-building"></i>
-                <span class="ms-2">Departments</span>
+                <span class="ms-2 text-break">Departments</span>
             </a>
         </li>
 
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'jobtitle_list' %}" class="svg-icon">
                 <i class="fa fa-briefcase"></i>
-                <span class="ms-2">Job Titles & Positions</span>
+                <span class="ms-2 text-break">Job Titles</span>
             </a>
         </li>
 
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'organization_chart' %}" class="svg-icon">
                 <i class="fa fa-sitemap"></i>
-                <span class="ms-2">Teams / Organizational Chart</span>
+                <span class="ms-2 text-break">Teams / Organizational Chart</span>
             </a>
         </li>
+    </ul>
+</li>
+
 
         <!-- RECRUITMENT -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Recruitment</span>
-        </li>
+        <!-- Recruitment Dropdown Parent -->
+<li class="sidebar-layout">
+    <a href="#recruitmentDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Recruitment</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
+
+    <!-- Submenu -->
+    <ul id="recruitmentDropdown" class="collapse list-unstyled ms-4 mt-2">
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'job_openings' %}" class="svg-icon">
                 <i class="fa fa-bullhorn"></i>
-                <span class="ms-2">Job Openings</span>
+                <span class="ms-2 text-break">Job Openings</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'applicants' %}" class="svg-icon">
                 <i class="fa fa-user-check"></i>
-                <span class="ms-2">Applicants / Candidates</span>
+                <span class="ms-2 text-break">Applicants / Candidates</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'interviews' %}" class="svg-icon">
                 <i class="fa fa-calendar-check"></i>
-                <span class="ms-2">Interviews & Hiring</span>
+                <span class="ms-2 text-break">Interviews & Hiring</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'onboarding' %}" class="svg-icon">
                 <i class="fa fa-user-plus"></i>
-                <span class="ms-2">Onboarding</span>
+                <span class="ms-2 text-break">Onboarding</span>
             </a>
         </li>
+    </ul>
+</li>
+
 
         <!-- ATTENDANCE & TIME -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Attendance & Time</span>
-        </li>
+       <!-- Attendance & Time Dropdown Parent -->
+<li class="sidebar-layout">
+    <a href="#attendanceDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Attendance & Time</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
+
+    <!-- Submenu -->
+    <ul id="attendanceDropdown" class="collapse list-unstyled ms-4 mt-2">
+        
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'attendance_list' %}" class="svg-icon">
                 <i class="fa fa-clock"></i>
-                <span class="ms-2">Attendance</span>
+                <span class="ms-2 text-break">Attendance</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'shift_list' %}" class="svg-icon">
                 <i class="fa fa-calendar-day"></i>
-                <span class="ms-2">Shift Management</span>
+                <span class="ms-2 text-break">Shift Management</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'leave_request_list' %}" class="svg-icon">
                 <i class="fa fa-plane-departure"></i>
-                <span class="ms-2">Leave & Time-Off Requests</span>
+                <span class="ms-2 text-break">Leave & Time-Off Requests</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'holiday_list' %}" class="svg-icon">
                 <i class="fa fa-calendar-alt"></i>
-                <span class="ms-2">Work Calendar / Holidays</span>
+                <span class="ms-2 text-break">Work Calendar / Holidays</span>
             </a>
         </li>
+    </ul>
+</li>
 
-        <!-- PAYROLL & FINANCE -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Payroll & Finance</span>
-        </li>
+
+       <!-- Payroll & Finance Dropdown Parent -->
+<li class="sidebar-layout">
+    <a href="#financeDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Payroll & Finance</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
+
+    <!-- Submenu -->
+    <ul id="financeDropdown" class="collapse list-unstyled ms-4 mt-2">
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'payroll_processing' %}" class="svg-icon">
                 <i class="fa fa-money-bill-wave"></i>
-                <span class="ms-2">Payroll Processing</span>
+                <span class="ms-2 text-break">Payroll Processing</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'salary_structure' %}" class="svg-icon">
                 <i class="fa fa-file-invoice-dollar"></i>
-                <span class="ms-2">Salary Structure / Payslips</span>
+                <span class="ms-2 text-break">Salary Structure / Payslips</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'deductions_benefits' %}" class="svg-icon">
                 <i class="fa fa-hand-holding-usd"></i>
-                <span class="ms-2">Deductions & Benefits</span>
+                <span class="ms-2 text-break">Deductions & Benefits</span>
             </a>
         </li>
+
         <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
+            <a href="{% url 'loans_advances' %}" class="svg-icon">
                 <i class="fa fa-credit-card"></i>
-                <span class="ms-2">Loan & Advance Requests</span>
-            </a>
-        </li>
-
-        <!-- PERFORMANCE & DEVELOPMENT -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Performance & Development</span>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-chart-line"></i>
-                <span class="ms-2">Performance Reviews</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-bullseye"></i>
-                <span class="ms-2">Goals / KPIs</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-chalkboard-teacher"></i>
-                <span class="ms-2">Training & Development</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-user-shield"></i>
-                <span class="ms-2">Promotions & Warnings</span>
-            </a>
-        </li>
-
-        <!-- DOCUMENTS -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Documents</span>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-folder"></i>
-                <span class="ms-2">Employee Documents</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-file-contract"></i>
-                <span class="ms-2">Company Policies & Forms</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-file-signature"></i>
-                <span class="ms-2">Contracts & Letters</span>
-            </a>
-        </li>
-
-        <!-- SELF SERVICE -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Self Service</span>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-user"></i>
-                <span class="ms-2">My Profile</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-clock"></i>
-                <span class="ms-2">My Attendance</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-plane"></i>
-                <span class="ms-2">My Leave Requests</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-wallet"></i>
-                <span class="ms-2">My Payslips</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-chart-bar"></i>
-                <span class="ms-2">My Performance</span>
-            </a>
-        </li>
-
-        <!-- ADMINISTRATION -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Administration</span>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-users-cog"></i>
-                <span class="ms-2">User & Role Management</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-key"></i>
-                <span class="ms-2">Permissions / Groups</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-cogs"></i>
-                <span class="ms-2">Settings</span>
-            </a>
-        </li>
-
-        <!-- SUPPORT & LOGOUT -->
-        <li class="px-3 pt-3 pb-2">
-            <span class="text-uppercase small fw-bold">Support / Others</span>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-bell"></i>
-                <span class="ms-2">Notifications</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-bullhorn"></i>
-                <span class="ms-2">Announcements / News</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-question-circle"></i>
-                <span class="ms-2">Help & Support</span>
-            </a>
-        </li>
-        <li class="sidebar-layout">
-            <a href="#" class="svg-icon">
-                <i class="fa fa-sign-out-alt"></i>
-                <span class="ms-2">Logout</span>
+                <span class="ms-2 text-break">Loan & Advance Requests</span>
             </a>
         </li>
 
     </ul>
-</nav>
+</li>
 
+
+       <!-- Performance & Development Dropdown Parent -->
+<li class="sidebar-layout">
+    <a href="#performanceDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Performance & Development</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
+
+    <!-- Submenu -->
+    <ul id="performanceDropdown" class="collapse list-unstyled ms-4 mt-2">
+
+        <!-- Performance Reviews (commented out in your code) -->
+        <!--
+        <li class="sidebar-layout">
+            <a href="#" class="svg-icon">
+                <i class="fa fa-chart-line"></i>
+                <span class="ms-2 text-break">Performance Reviews</span>
+            </a>
+        </li>
+        -->
+
+        <li class="sidebar-layout">
+            <a href="{% url 'goals' %}" class="svg-icon">
+                <i class="fa fa-bullseye"></i>
+                <span class="ms-2 text-break">Goals / KPIs</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'training_programs' %}" class="svg-icon">
+                <i class="fa fa-chalkboard-teacher"></i>
+                <span class="ms-2 text-break">Training & Development</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'promotions_and_warnings' %}" class="svg-icon">
+                <i class="fa fa-user-shield"></i>
+                <span class="ms-2 text-break">Promotions & Warnings</span>
+            </a>
+        </li>
+
+    </ul>
+</li>
+
+
+        <!-- DOCUMENTS -->
+        <!-- Documents Dropdown Parent -->
+<li class="sidebar-layout">
+    <a href="#documentsDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Documents</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
+
+    <!-- Submenu -->
+    <ul id="documentsDropdown" class="collapse list-unstyled ms-4 mt-2">
+
+        <li class="sidebar-layout">
+            <a href="{% url 'employee_documents' %}" class="svg-icon">
+                <i class="fa fa-folder"></i>
+                <span class="ms-2 text-break">Employee Documents</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'company_policies' %}" class="svg-icon">
+                <i class="fa fa-file-contract"></i>
+                <span class="ms-2 text-break">Company Policies & Forms</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'contracts_letters' %}" class="svg-icon">
+                <i class="fa fa-file-signature"></i>
+                <span class="ms-2 text-break">Contracts & Letters</span>
+            </a>
+        </li>
+
+    </ul>
+</li>
+
+
+        <!-- SELF SERVICE -->
+       <!-- Self Service Dropdown Parent -->
+<li class="sidebar-layout">
+    <a href="#selfServiceDropdown"
+       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+       data-bs-toggle="collapse">
+        <span class="text-uppercase small fw-bold">Self Service</span>
+        <i class="fa fa-chevron-right rotate-icon"></i>
+    </a>
+
+    <!-- Submenu -->
+    <ul id="selfServiceDropdown" class="collapse list-unstyled ms-4 mt-2">
+
+        <li class="sidebar-layout">
+            <a href="{% url 'my_profile' %}" class="svg-icon">
+                <i class="fa fa-user"></i>
+                <span class="ms-2 text-break">My Profile</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'my_attendance' %}" class="svg-icon">
+                <i class="fa fa-clock"></i>
+                <span class="ms-2 text-break">My Attendance</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'my_leave_requests' %}" class="svg-icon">
+                <i class="fa fa-plane"></i>
+                <span class="ms-2 text-break">My Leave Requests</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'my_payslips' %}" class="svg-icon">
+                <i class="fa fa-wallet"></i>
+                <span class="ms-2 text-break">My Payslips</span>
+            </a>
+        </li>
+
+        <li class="sidebar-layout">
+            <a href="{% url 'my_performance' %}" class="svg-icon">
+                <i class="fa fa-chart-bar"></i>
+                <span class="ms-2 text-break">My Performance</span>
+            </a>
+        </li>
+
+    </ul>
+</li>
+
+        <!-- ADMINISTRATION & SETTINGS -->
+        <li class="sidebar-layout">
+            <a href="#adminSettingsDropdown"
+               class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+               data-bs-toggle="collapse">
+                <span class="text-uppercase small fw-bold">Administration &amp; Settings</span>
+                <i class="fa fa-chevron-right rotate-icon"></i>
+            </a>
+
+            <ul id="adminSettingsDropdown" class="collapse list-unstyled ms-4 mt-2">
+                <li class="sidebar-layout">
+                    <a href="{% url 'roles_list' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-users-cog"></i>
+                        <span class="ms-2 text-break">User & Role Management</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-layout">
+                    <a href="{% url 'permission_groups_list' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-key"></i>
+                        <span class="ms-2 text-break">Permissions / Groups</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-layout">
+                    <a href="{% url 'functions_list' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-cogs"></i>
+                        <span class="ms-2 text-break">Functions</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-layout">
+                    <a href="{% url 'responsibilities_list' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-tasks"></i>
+                        <span class="ms-2 text-break">Responsibilities</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-layout">
+                    <a href="#adminServicesDropdown"
+                       class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+                       data-bs-toggle="collapse">
+                        <span class="ms-2 text-break">Services</span>
+                        <i class="fa fa-chevron-right rotate-icon"></i>
+                    </a>
+
+                    <ul id="adminServicesDropdown" class="collapse list-unstyled ms-4 mt-2">
+                        <li class="sidebar-layout">
+                            <a href="{% url 'types_of_service_list' %}" class="svg-icon d-flex align-items-center">
+                                <i class="fa fa-list-alt"></i>
+                                <span class="ms-2 text-break">Types of Service</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-layout">
+                            <a href="{% url 'services_list' %}" class="svg-icon d-flex align-items-center">
+                                <i class="fa fa-tools"></i>
+                                <span class="ms-2 text-break">Services</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+
+        <!-- SUPPORT & LOGOUT -->
+        <li class="sidebar-layout">
+            <a href="#supportDropdown"
+               class="svg-icon d-flex justify-content-between align-items-center dropdown-toggle-btn"
+               data-bs-toggle="collapse">
+                <span class="text-uppercase small fw-bold">Support / Others</span>
+                <i class="fa fa-chevron-right rotate-icon"></i>
+            </a>
+
+            <ul id="supportDropdown" class="collapse list-unstyled ms-4 mt-2">
+                <li class="sidebar-layout">
+                    <a href="{% url 'support:notifications' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-bell"></i>
+                        <span class="ms-2 text-break">Notifications</span>
+                    </a>
+                </li>
+                <li class="sidebar-layout">
+                    <a href="{% url 'support:announcements' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-newspaper"></i>
+                        <span class="ms-2 text-break">Announcements</span>
+                    </a>
+                </li>
+                <li class="sidebar-layout">
+                    <a href="{% url 'support:help_support' %}" class="svg-icon d-flex align-items-center">
+                        <i class="fa fa-life-ring"></i>
+                        <span class="ms-2 text-break">Help &amp; Support</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+
+    </ul>
+
+</nav>

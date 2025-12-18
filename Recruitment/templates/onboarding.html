@@ -1,0 +1,200 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block content %}
+<br /><br /><br />
+
+<div class="container-fluid mt-4">
+  <div class="card">
+
+    <!-- Header with Add Button -->
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h4 class="mb-0">Employee Onboarding</h4>
+      <button type="button" class="btn btn-success btn-sm" id="addOnboardingBtn" data-bs-toggle="modal" data-bs-target="#onboardingModal">
+        Add Task
+      </button>
+    </div>
+
+    <div class="card-body">
+      {% if onboarding_tasks %}
+
+        <table class="table table-striped">
+          <thead class="thead-light">
+            <tr>
+              <th>Employee</th>
+              <th>Task</th>
+              <th>Assigned To</th>
+              <th>Status</th>
+              <th>Due Date</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for task in onboarding_tasks %}
+            <tr>
+              <td>{{ task.employee }}</td>
+              <td>{{ task.task_name }}</td>
+              <td>{{ task.assigned_to|default:"—" }}</td>
+
+              <td>
+                <span class="badge 
+                  {% if task.status == 'COMPLETED' %}bg-success
+                  {% elif task.status == 'IN_PROGRESS' %}bg-warning
+                  {% else %}bg-secondary{% endif %}">
+                  {{ task.status }}
+                </span>
+              </td>
+
+              <td>{{ task.due_date|date:"M d, Y"|default:"—" }}</td>
+
+              <!-- ACTION BUTTONS -->
+              <td class="d-flex gap-2">
+                <a href="{% url 'onboarding-detail' task.id %}" class="btn btn-outline-secondary btn-sm">View</a>
+                <button
+                  type="button"
+                  class="btn btn-outline-primary btn-sm js-edit-onboarding"
+                  data-bs-toggle="modal"
+                  data-bs-target="#onboardingModal"
+                  data-edit-url="{% url 'onboarding-edit' task.id %}"
+                  data-employee="{{ task.employee.id }}"
+                  data-task="{{ task.task_name|escape }}"
+                  data-description="{{ task.description|default:''|escape }}"
+                  data-assigned="{{ task.assigned_to.id|default:'' }}"
+                  data-due-date="{{ task.due_date|date:'Y-m-d' }}"
+                  data-status="{{ task.status }}"
+                >
+                  Edit
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-outline-danger btn-sm js-delete-onboarding"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteOnboardingModal"
+                  data-delete-url="{% url 'onboarding-delete' task.id %}"
+                  data-task-name="{{ task.task_name }}"
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+
+      {% else %}
+        <p class="text-center text-muted">No onboarding tasks yet.</p>
+      {% endif %}
+    </div>
+
+  </div>
+</div>
+
+<!-- Create/Edit Modal -->
+<div class="modal fade" id="onboardingModal" tabindex="-1" aria-labelledby="onboardingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" id="onboardingForm" data-create-url="{% url 'onboarding-create' %}">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="onboardingModalLabel">Add Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for field in onboarding_form %}
+            <div class="mb-3">
+              <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+              {{ field }}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="onboardingFormSubmit">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteOnboardingModal" tabindex="-1" aria-labelledby="deleteOnboardingModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <form method="post" id="deleteOnboardingForm">
+        {% csrf_token %}
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteOnboardingModalLabel">Delete Task</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="mb-0">Delete <span class="fw-bold" id="onboardingToDelete"></span>?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="submit" class="btn btn-danger">Delete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+{{ block.super }}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const onboardingModal = document.getElementById('onboardingModal');
+  const onboardingForm = document.getElementById('onboardingForm');
+  const onboardingModalLabel = document.getElementById('onboardingModalLabel');
+  const onboardingFormSubmit = document.getElementById('onboardingFormSubmit');
+  const addOnboardingBtn = document.getElementById('addOnboardingBtn');
+  const deleteOnboardingForm = document.getElementById('deleteOnboardingForm');
+  const onboardingToDelete = document.getElementById('onboardingToDelete');
+
+  const setField = (name, value) => {
+    const field = onboardingForm.querySelector(`[name="${name}"]`);
+    if (!field) return;
+    field.value = value || '';
+  };
+
+  const resetForm = () => {
+    onboardingForm.reset();
+    onboardingForm.action = onboardingForm.dataset.createUrl;
+    onboardingModalLabel.textContent = 'Add Task';
+    onboardingFormSubmit.textContent = 'Save';
+  };
+
+  addOnboardingBtn.addEventListener('click', resetForm);
+
+  document.querySelectorAll('.js-edit-onboarding').forEach((button) => {
+    button.addEventListener('click', () => {
+      resetForm();
+      onboardingForm.action = button.dataset.editUrl;
+      onboardingModalLabel.textContent = 'Edit Task';
+      onboardingFormSubmit.textContent = 'Update';
+      setField('employee', button.dataset.employee || '');
+      setField('task_name', button.dataset.task || '');
+      setField('description', button.dataset.description || '');
+      setField('assigned_to', button.dataset.assigned || '');
+      setField('due_date', button.dataset.dueDate || '');
+      setField('status', button.dataset.status || '');
+    });
+  });
+
+  document.querySelectorAll('.js-delete-onboarding').forEach((button) => {
+    button.addEventListener('click', () => {
+      deleteOnboardingForm.action = button.dataset.deleteUrl;
+      onboardingToDelete.textContent = button.dataset.taskName;
+    });
+  });
+
+  onboardingModal.addEventListener('hidden.bs.modal', resetForm);
+});
+</script>
+{% endblock %}

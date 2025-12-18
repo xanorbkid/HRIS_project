@@ -8,7 +8,22 @@
         <meta charset="utf-8">
         <meta name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>Datum | CRM Admin Dashboard Template</title>
+        <title>BrightLightHRIS</title>
+
+        <!-- Template login link  -->
+         <link rel="apple-touch-icon" sizes="76x76" href="static/assets1/img/apple-icon.png">
+        <link rel="icon" type="image/png" href="static/assets1/img/favicon.png">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Sans:300,400,500,600,700,800|PT+Mono:300,400,500,600,700" rel="stylesheet" />
+  <!-- Nucleo Icons -->
+  <link href="static/assets1/css/nucleo-icons.css" rel="stylesheet" />
+  <link href="static/assets1/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- Font Awesome Icons -->
+  <script src="https://kit.fontawesome.com/349ee9c857.js" crossorigin="anonymous"></script>
+  <link href="static/assets1/css/nucleo-svg.css" rel="stylesheet" />
+  <!-- CSS Files -->
+  <link id="pagestyle" href="static/assets1/css/corporate-ui-dashboard.css?v=1.0.0" rel="stylesheet" />
+
+
         <!-- Favicon -->
         <link rel="shortcut icon" href="/static/assets/images/favicon.ico" />
         <!-- Library / Plugin Css Build -->
@@ -18,6 +33,9 @@
         <link rel="stylesheet" href="/static/assets/css/custom.mine209.css?v=1.0.0">
         <!-- Customizer Css -->
         <link rel="stylesheet" href="/static/assets/css/customizer.mine209.css?v=1.0.0">
+        <!-- Sidebar overrides -->
+        <link rel="stylesheet" href="/static/assets/css/sidebar-overrides.css?v=1.0.0">
+        <link rel="stylesheet" href="/static/assets/css/form-enhancements.css?v=1.0.0">
         <!-- font-awesome css -->
         <link rel="stylesheet"
             href="/static/assets/vendor/font-awesome/css/all.mine209.css?v=1.0.0" />
@@ -51,7 +69,7 @@
                     <a href="/" class="header-logo">
                         <img src="/static/assets/images/logo.png"
                             class="img-fluid rounded-normal " alt="logo">
-                        <span>Datum</span>
+                        <span>BrightLightHRIS</span>
                     </a>
                     <div class="side-menu-bt-sidebar-1">
                         <svg xmlns="http://www.w3.org/2000/svg"
@@ -84,6 +102,215 @@
             {% include 'components/footer.html' %}
             <!-- Library Bundle Script -->
             {% include 'components/scripts.html' %}
+
+                <!--   Core JS Files   -->
+  <script src="static/assets1/js/core/popper.min.js"></script>
+  <script src="static/assets1/js/core/bootstrap.min.js"></script>
+  <script src="static/assets1/js/plugins/perfect-scrollbar.min.js"></script>
+  <script src="static/assets1/js/plugins/smooth-scrollbar.min.js"></script>
+  <script>
+    var win = navigator.platform.indexOf('Win') > -1;
+    if (win && document.querySelector('#sidenav-scrollbar')) {
+      var options = {
+        damping: '0.5'
+      }
+      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+    }
+  </script>
+  <!-- Github buttons -->
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <!-- Control Center for Corporate UI Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="static/assets1/js/corporate-ui-dashboard.min.js?v=1.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const showConfirm = (options, onConfirm) => {
+        Swal.fire({
+          title: options.title || "Do you want to save the changes?",
+          text: options.text || '',
+          icon: options.icon || undefined,
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: options.confirmButtonText || "Save",
+          denyButtonText: options.denyButtonText || "Don't save",
+          cancelButtonText: options.cancelButtonText || "Cancel",
+          confirmButtonColor: options.confirmButtonColor,
+          cancelButtonColor: options.cancelButtonColor,
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(
+              options.confirmedTitle || "Saved!",
+              options.confirmedText || "",
+              options.confirmedIcon || "success"
+            ).then(() => {
+              if (typeof onConfirm === 'function') {
+                onConfirm();
+              }
+            });
+          } else if (result.isDenied) {
+            Swal.fire(
+              options.deniedTitle || "Changes are not saved",
+              options.deniedText || "",
+              options.deniedIcon || "info"
+            );
+          }
+        });
+      };
+
+      document.addEventListener('submit', function(event) {
+        const form = event.target;
+        if (!(form instanceof HTMLFormElement)) {
+          return;
+        }
+
+        const identifier = (form.id || '').toLowerCase();
+        const requiresConfirm =
+          form.hasAttribute('data-swal-confirm') ||
+          (identifier && identifier.includes('delete'));
+
+        if (!requiresConfirm) {
+          return;
+        }
+
+        if (form.dataset.swalConfirmed === 'true') {
+          form.dataset.swalConfirmed = '';
+          return;
+        }
+
+        event.preventDefault();
+
+        showConfirm(
+          {
+            title: form.dataset.swalTitle,
+            text: form.dataset.swalText,
+            icon: form.dataset.swalIcon,
+            confirmButtonColor: form.dataset.swalConfirmColor,
+            cancelButtonColor: form.dataset.swalCancelColor,
+            confirmButtonText: form.dataset.swalConfirmText,
+            cancelButtonText: form.dataset.swalCancelText,
+          },
+          () => {
+            form.dataset.swalConfirmed = 'true';
+            form.submit();
+          }
+        );
+      }, true);
+
+      document.addEventListener('click', function(event) {
+        const link = event.target.closest('a');
+        if (!link || !link.href) {
+          return;
+        }
+
+        if (link.dataset.swalIgnore === 'true') {
+          return;
+        }
+
+        const href = link.getAttribute('href');
+        const hasModalToggle = link.hasAttribute('data-bs-toggle');
+
+        if (!href || href === '#' || hasModalToggle) {
+          return;
+        }
+
+        const isDeleteLink =
+          link.hasAttribute('data-swal-confirm') ||
+          href.toLowerCase().includes('delete');
+
+        if (!isDeleteLink) {
+          return;
+        }
+
+        event.preventDefault();
+
+        showConfirm(
+          {
+            title: link.dataset.swalTitle,
+            text: link.dataset.swalText,
+            icon: link.dataset.swalIcon,
+            confirmButtonColor: link.dataset.swalConfirmColor,
+            cancelButtonColor: link.dataset.swalCancelColor,
+            confirmButtonText: link.dataset.swalConfirmText,
+            cancelButtonText: link.dataset.swalCancelText,
+          },
+          () => {
+            window.location.assign(href);
+          }
+        );
+      }, true);
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const wrapper = document.querySelector('.wrapper');
+      if (!wrapper) {
+        return;
+      }
+
+      const directContentPage = Array.from(wrapper.children).find(child =>
+        child.classList && child.classList.contains('content-page')
+      );
+      if (directContentPage) {
+        return;
+      }
+
+      const topNav = Array.from(wrapper.children).find(child =>
+        child.classList && child.classList.contains('iq-top-navbar')
+      );
+      if (!topNav) {
+        return;
+      }
+
+      const nodesToWrap = [];
+      let sibling = topNav.nextSibling;
+      while (sibling) {
+        const nextSibling = sibling.nextSibling;
+        if (
+          sibling.nodeType === Node.ELEMENT_NODE ||
+          (sibling.nodeType === Node.TEXT_NODE && sibling.textContent.trim())
+        ) {
+          nodesToWrap.push(sibling);
+        }
+        sibling = nextSibling;
+      }
+
+      if (!nodesToWrap.length) {
+        return;
+      }
+
+      const autoWrapper = document.createElement('div');
+      autoWrapper.className = 'content-page auto-content-page';
+      wrapper.insertBefore(autoWrapper, nodesToWrap[0]);
+      nodesToWrap.forEach(node => {
+        autoWrapper.appendChild(node);
+      });
+    });
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const addModernClasses = () => {
+        document
+          .querySelectorAll('.modal-body input:not([type="checkbox"]):not([type="radio"]):not(.form-control)')
+          .forEach((input) => input.classList.add('form-control'));
+
+        document
+          .querySelectorAll('.modal-body select:not(.form-select)')
+          .forEach((select) => select.classList.add('form-select'));
+
+        document
+          .querySelectorAll('.modal-body textarea:not(.form-control)')
+          .forEach((textarea) => textarea.classList.add('form-control'));
+      };
+
+      addModernClasses();
+      document.addEventListener('shown.bs.modal', addModernClasses);
+    });
+  </script>
+
+        {% block extra_scripts %}{% endblock %}
 
         </body>
 

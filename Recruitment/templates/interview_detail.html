@@ -1,0 +1,27 @@
+{% extends "components/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between">
+      <h5>Interview Details</h5>
+      <a href="{% url 'interview-list' %}" class="btn btn-secondary btn-sm">Back</a>
+    </div>
+
+    <div class="card-body">
+      <p><strong>Applicant:</strong> {{ interview.applicant }}</p>
+      <p><strong>Interviewer:</strong> {{ interview.interviewer|default:"Unassigned" }}</p>
+      <p><strong>Type:</strong> {{ interview.get_interview_type_display }}</p>
+      <p><strong>Date & Time:</strong> {{ interview.scheduled_date|date:"M d, Y H:i" }}</p>
+      <p><strong>Result:</strong> {{ interview.result }}</p>
+      <p><strong>Notes:</strong></p>
+      <div class="border p-3 rounded bg-light">{{ interview.notes|linebreaks }}</div>
+
+      <div class="mt-4 d-flex gap-2">
+        <a href="{% url 'interview-edit' interview.id %}" class="btn btn-primary btn-sm">Edit</a>
+        <a href="{% url 'interview-delete' interview.id %}" class="btn btn-danger btn-sm">Delete</a>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

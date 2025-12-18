@@ -1,0 +1,29 @@
+{% extends "components/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="content-page">
+    <div class="container-fluid">
+
+        <div class="card col-lg-8 mx-auto shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">{{ title }}</h5>
+            </div>
+
+            <form method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    {{ form.as_p }}
+                </div>
+
+                <div class="card-footer text-end">
+                    <a href="{% url 'jobtitle_list' %}" class="btn btn-secondary">Cancel</a>
+                    <button class="btn btn-primary">Save</button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}
