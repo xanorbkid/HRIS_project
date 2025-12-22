@@ -22,21 +22,32 @@ if not SECRET_KEY:
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 
-CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000/' 
-]
+RENDER_DOMAIN = config('RENDER_DOMAIN', default=None)
+
+LOCAL_CLIENT_ORIGIN = 'http://127.0.0.1:8000'
+
+CORS_ALLOWED_ORIGINS = [LOCAL_CLIENT_ORIGIN]
+
+if RENDER_DOMAIN and RENDER_DOMAIN not in CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS.append(RENDER_DOMAIN)
 
 CORS_ALLOW_CREDENTIALS = True
 
 
 # # Trusted Origin for CSRF_Token
-CSRF_TRUSTED_ORIGINS = [
-     'http://127.0.0.1:8000'
-]
+CSRF_TRUSTED_ORIGINS = [LOCAL_CLIENT_ORIGIN]
+
+if RENDER_DOMAIN and RENDER_DOMAIN not in CSRF_TRUSTED_ORIGINS:
+    CSRF_TRUSTED_ORIGINS.append(RENDER_DOMAIN)
 
 
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+
+RENDER_HOSTNAME = os.getenv("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_HOSTNAME and RENDER_HOSTNAME not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(RENDER_HOSTNAME)
+
 
 
 # Application definition
@@ -149,10 +160,13 @@ USE_TZ = True
 STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# Static files for Railway
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 
 # Authentication Redirects
@@ -164,4 +178,3 @@ LOGIN_URL = '/auth/login/'  # When @login_required is used, redirect here
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
